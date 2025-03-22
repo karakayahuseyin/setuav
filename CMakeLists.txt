@@ -46,15 +46,31 @@ find_package(OpenCASCADE REQUIRED COMPONENTS
     Visualization
 )
 
+# Define the OpenCASCADE libraries to link
+set(OPENCASCADE_LIBS
+    TKernel
+    TKMath
+    TKBRep
+    TKGeomBase
+    TKGeomAlgo
+    TKG3d
+    TKG2d
+    TKTopAlgo
+    TKHLR
+    TKMesh
+    TKService
+    TKV3d
+)
+
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SOURCES
-    ${SRC_DIR}/main.cpp
     ${SRC_DIR}/Setuav.cpp
     ${SRC_DIR}/Airframe/Airframe.cpp
 )
 
 qt_add_executable(${PROJECT_NAME}App
+    ${SRC_DIR}/main.cpp
     ${SOURCES}
     qml.qrc
 )
@@ -72,17 +88,35 @@ target_link_libraries(${PROJECT_NAME}App
         Qt6::Core
         Qt6::Gui
         Qt6::Qml
-        # Link specific OpenCASCADE libraries instead of all libraries
-        TKernel
-        TKMath
-        TKBRep
-        TKGeomBase
-        TKGeomAlgo
-        TKG3d
-        TKG2d
-        TKTopAlgo
-        TKHLR
-        TKMesh
-        TKService
-        TKV3d
+        # Link OpenCASCADE libraries
+        ${OPENCASCADE_LIBS}
 )
+
+set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+
+add_executable(${PROJECT_NAME}Test 
+    ${TEST_DIR}/main.cpp
+    ${SOURCES}
+)
+
+target_include_directories(${PROJECT_NAME}Test
+    PRIVATE
+        ${SRC_DIR}
+        ${TEST_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib
+        ${OpenCASCADE_INCLUDE_DIR}
+)
+
+target_link_libraries(${PROJECT_NAME}Test 
+    PRIVATE
+        Qt6::Quick
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Qml
+        # Link OpenCASCADE libraries
+        ${OPENCASCADE_LIBS}
+)
+
+enable_testing()
+
+add_test(NAME ${PROJECT_NAME}Test COMMAND ${PROJECT_NAME}Test)
