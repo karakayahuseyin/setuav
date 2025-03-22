@@ -4,16 +4,16 @@
  * For more information, see the LICENSE file in the Setuav project root directory.
  */
 
-#include "Setuav.hpp"
-#include "Airframe/Airframe.hpp"
+#include "Airframe.hpp"
 
-int main(int argc, char **argv)
+#include <QDebug>
+
+Airframe::Airframe()
 {
-    /* Test */
-#ifdef AIRFRAME_H
-    Airframe airframe;
-#endif
-    Setuav app(argc, argv);
-    app.init();
-    return app.exec();
+    qDebug() << "Airframe created.";
+}
+
+Airframe::~Airframe()
+{
+    qDebug() << "Airframe destroyed.";
 }

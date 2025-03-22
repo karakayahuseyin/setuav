@@ -4,16 +4,19 @@
  * For more information, see the LICENSE file in the Setuav project root directory.
  */
 
-#include "Setuav.hpp"
-#include "Airframe/Airframe.hpp"
+#pragma once
 
-int main(int argc, char **argv)
+#ifndef AIRFRAME_H
+#define AIRFRAME_H
+
+#include <QObject>
+
+class Airframe : public QObject
 {
-    /* Test */
-#ifdef AIRFRAME_H
-    Airframe airframe;
-#endif
-    Setuav app(argc, argv);
-    app.init();
-    return app.exec();
-}
+    Q_OBJECT
+public:
+    Airframe();
+    ~Airframe();
+};
+
+#endif // AIRFRAME_H

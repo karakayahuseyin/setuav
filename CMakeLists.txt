@@ -1,3 +1,7 @@
+# Copyright (C) 2025 Hüseyin Karakaya github.com/karakayahuseyin
+# This file is part of the Setuav project and is licensed under the Apache License 2.0.
+# For more information, see the LICENSE file in the Setuav project root directory.
+
 cmake_minimum_required(VERSION 3.10)
 
 set(VERSION_MAJOR 0)
@@ -47,6 +51,7 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES
     ${SRC_DIR}/main.cpp
     ${SRC_DIR}/Setuav.cpp
+    ${SRC_DIR}/Airframe/Airframe.cpp
 )
 
 qt_add_executable(${PROJECT_NAME}App
