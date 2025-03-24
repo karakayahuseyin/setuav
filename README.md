@@ -20,7 +20,7 @@ $ sudo apt install libocct-foundation-dev libocct-modeling-data-dev libocct-mode
 ### Building SETUAV
 ```bash
 # Clone the repository (if you haven't already)
-git clone https://github.com/username/setuav.git
+git clone https://github.com/karakayahuseyin/setuav.git
 cd setuav
 
 # Create a build directory
