@@ -11,3 +11,14 @@ TEST_CASE("Airframe test")
     Airframe airframe;
     CHECK(true);
 }
+
+TEST_CASE("Airframe test 2")
+{
+    if(0 == 1)
+    {
+        CHECK(true);
+    }
+    else {
+        CHECK(false);
+    }
+}

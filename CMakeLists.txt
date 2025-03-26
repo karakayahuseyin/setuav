@@ -67,12 +67,16 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES
     ${SRC_DIR}/Setuav.cpp
     ${SRC_DIR}/Airframe/Airframe.cpp
+    ${SRC_DIR}/Airframe/FixedWing.cpp
+    ${SRC_DIR}/Airframe/Wing.cpp
+    ${SRC_DIR}/Airframe/Naca4.cpp
 )
 
 qt_add_executable(${PROJECT_NAME}App
     ${SRC_DIR}/main.cpp
     ${SOURCES}
     qml.qrc
+    resources.qrc
 )
 
 target_include_directories(${PROJECT_NAME}App
