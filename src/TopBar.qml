@@ -1,3 +1,6 @@
+// Copyright (C) 2025 Hüseyin Karakaya
+// This file is part of Setuav, licensed under GNU GPL v3.
+
 import QtQuick              2.15
 import QtQuick.Controls     2.15
 import QtQuick.Shapes       1.8
@@ -82,8 +85,8 @@ Rectangle {
             Button {
                 id: button
                 background: Rectangle {
-                    implicitHeight: 25
-                    implicitWidth: 150
+                    implicitHeight: 28
+                    implicitWidth: 160
                     color: currentWorkspace === model.name ? "#ff8844" : "transparent"
                     radius: 10
                 }
