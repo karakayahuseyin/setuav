@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/qml">
         <file alias="Main.qml">src/Main.qml</file>
-        <file alias="Airframe.qml">src/Airframe.qml</file>
         <file alias="TopBar.qml">src/TopBar.qml</file>
-        <file alias="SideBar.qml">src/SideBar.qml</file>
-        <file alias="IconButton.qml">src/UIComponents/IconButton.qml</file>
+        <file alias="Airframe.qml">src/Airframe.qml</file>
+        <file alias="Propulsion.qml">src/Propulsion.qml</file>
+        <file alias="Performance.qml">src/Performance.qml</file>
     </qresource>
 </RCC>

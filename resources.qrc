@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/img">
         <file alias="logo.png">resources/logo.png</file>
-        <file alias="airframe.png">resources/airframe.png</file>
+        <file alias="airframe.svg">resources/airframe.svg</file>
+        <file alias="propulsion.svg">resources/propulsion.svg</file>
+        <file alias="performance.svg">resources/performance.svg</file>
     </qresource>
 </RCC>
