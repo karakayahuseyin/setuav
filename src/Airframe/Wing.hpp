@@ -9,6 +9,7 @@
 #include "Airfoil.hpp"
 
 #include <vector>
+#include <memory>
     
 struct WingSection {
     Airfoil airfoil;
@@ -25,16 +26,18 @@ public:
     Wing();
     ~Wing() = delete;
 
-    void addSection(WingSection section);
+    void addSection(std::shared_ptr<WingSection> section);
+    void createSection(Airfoil airfoil, double span, double rootChord, 
+                    double tipChord, double sweep, double dihedral, double twist);
     void removeSection(int index);
     void editSection(int index);
 
-    std::vector<WingSection> sections() const { return m_sections; }
+    std::vector<std::shared_ptr<WingSection>> sections() const { return m_sections; }
     int span() const { return m_span; }
     int area() const { return m_area; }
 
 private:
-    std::vector<WingSection> m_sections;
+    std::vector<std::shared_ptr<WingSection>> m_sections;
     int sectionCount;
     int m_span; // mm
     int m_area; // dm^2
