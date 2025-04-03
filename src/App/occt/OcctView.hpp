@@ -59,24 +59,6 @@ public:
         toView(theWin)->onResize(theWidth, theHeight);
     }
 
-    //! Mouse scroll callback.
-    static void onMouseScrollCallback(GLFWwindow* theWin, double theOffsetX, double theOffsetY)
-    {
-        toView(theWin)->onMouseScroll(theOffsetX, theOffsetY);
-    }
-
-    //! Mouse click callback.
-    static void onMouseButtonCallback(GLFWwindow* theWin, int theButton, int theAction, int theMods)
-    {
-        toView(theWin)->onMouseButton(theButton, theAction, theMods);
-    }
-
-    //! Mouse move callback.
-    static void onMouseMoveCallback(GLFWwindow* theWin, double thePosX, double thePosY)
-    {
-        toView(theWin)->onMouseMove((int)thePosX, (int)thePosY);
-    }
-
 private:
 
     Handle(Window) mWindow;

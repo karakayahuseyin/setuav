@@ -46,9 +46,6 @@ void Setuav::initOcctView()
     glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mOcctView);
     glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), OcctView::onResizeCallback);
     glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), OcctView::onFBResizeCallback);
-    glfwSetScrollCallback(mWindow->getGlfwWindow(), OcctView::onMouseScrollCallback);
-    glfwSetMouseButtonCallback(mWindow->getGlfwWindow(), OcctView::onMouseButtonCallback);
-    glfwSetCursorPosCallback(mWindow->getGlfwWindow(), OcctView::onMouseMoveCallback);
 }
 
 void Setuav::initGui()
