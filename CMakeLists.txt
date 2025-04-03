@@ -34,8 +34,10 @@ include_directories(SYSTEM ${OpenCASCADE_INCLUDE_DIR})
 
 add_executable(Setuav
     src/main.cpp
-    src/App/OcctView.cpp
-    src/App/OcctView.hpp
+    src/App/occt/OcctView.cpp
+    src/App/occt/OcctView.hpp
+    src/App/occt/Geometry.cpp
+    src/App/occt/Geometry.hpp
     src/App/Window.cpp
     src/App/Window.hpp
     src/App/Setuav.cpp

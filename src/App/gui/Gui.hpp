@@ -1,7 +1,7 @@
 #ifndef _Gui_Header
 #define _Gui_Header
 
-#include "Window.hpp"
+#include "../Window.hpp"
 #include "Sidebar.hpp"
 #include "Topbar.hpp"
 
@@ -13,7 +13,7 @@
 class Gui {
 public:
     //! Constructor.
-    Gui(GLFWwindow* window);
+    Gui(GLFWwindow* window, Geometry* geometry);
     ~Gui();
 
     void init();

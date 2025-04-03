@@ -5,13 +5,9 @@
 
 #include <GLFW/glfw3.h>
 
-Setuav::Setuav()
-{
-}
+Setuav::Setuav() {}
 
-Setuav::~Setuav()
-{
-}
+Setuav::~Setuav() {}
 
 void Setuav::run()
 {
@@ -47,10 +43,7 @@ void Setuav::initOcctView()
     mOcctView = new OcctView(mWindow);
     mOcctView->init();
     
-    // Set window user pointer to OcctView and register callbacks
     glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mOcctView);
-    
-    // Register GLFW callbacks after setting the correct user pointer
     glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), OcctView::onResizeCallback);
     glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), OcctView::onFBResizeCallback);
     glfwSetScrollCallback(mWindow->getGlfwWindow(), OcctView::onMouseScrollCallback);
@@ -60,7 +53,7 @@ void Setuav::initOcctView()
 
 void Setuav::initGui()
 {
-    mGui = new Gui(mWindow->getGlfwWindow());
+    mGui = new Gui(mWindow->getGlfwWindow(), new Geometry(mOcctView->getContext(), mOcctView->getView()));
     mGui->init();
 }
 
@@ -75,6 +68,7 @@ void Setuav::mainloop()
         if (mGui->getCurrentPage() != Sidebar::Page::Performance)
         {
             mOcctView->render();
+            // disable IO for ImGui to avoid capturing mouse events
         } 
         else 
         {

@@ -1,9 +1,9 @@
 #include "Gui.hpp"
 
-Gui::Gui(GLFWwindow *window)
+Gui::Gui(GLFWwindow *window, Geometry *geometry)
     : mWindow(window),
       mTopbar(new Topbar()),
-      mSidebar(new Sidebar())
+      mSidebar(new Sidebar(geometry))
 {
 }
 

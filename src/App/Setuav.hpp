@@ -2,8 +2,9 @@
 #define _Setuav_Header
 
 #include "Window.hpp"
-#include "OcctView.hpp"
 #include "gui/Gui.hpp"
+#include "occt/OcctView.hpp"
+#include "occt/Geometry.hpp"
 
 class Setuav
 {
@@ -44,6 +45,7 @@ private:
     Handle(Window) mWindow;
     OcctView* mOcctView;
     Gui* mGui;
+    Geometry* mGeometry;
 
     // Handle(AirframeView) mAirframeView;
     // Handle(PropulsionView) mPropulsionView;

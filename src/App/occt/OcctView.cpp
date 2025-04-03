@@ -105,6 +105,8 @@ void OcctView::init()
     mView->ChangeRenderingParams().ToShowStats = Standard_True;
     
     mContext = new AIS_InteractiveContext(aViewer);
+    mView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.08, V3d_WIREFRAME);
+    mView->SetBackgroundColor(Quantity_NOC_GRAY25);
     
     Handle(AIS_ViewCube) aCube = new AIS_ViewCube();
     aCube->SetSize(55);
@@ -114,36 +116,6 @@ void OcctView::init()
     aCube->SetViewAnimation(this->ViewAnimation());
     aCube->SetFixedAnimationLoop(false);
     mContext->Display(aCube, false);
-}
-
-void OcctView::initDemoScene()
-{
-    if (mContext.IsNull())
-    {
-        return;
-    }
-
-    mView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.08, V3d_WIREFRAME);
-
-    gp_Ax2 anAxis;
-    anAxis.SetLocation(gp_Pnt(0.0, 0.0, 0.0));
-    Handle(AIS_Shape) aBox = new AIS_Shape(BRepPrimAPI_MakeBox(anAxis, 50, 50, 50).Shape());
-    mContext->Display(aBox, AIS_Shaded, 0, false);
-    anAxis.SetLocation(gp_Pnt(25.0, 125.0, 0.0));
-    Handle(AIS_Shape) aCone = new AIS_Shape(BRepPrimAPI_MakeCone(anAxis, 25, 0, 50).Shape());
-    mContext->Display(aCone, AIS_Shaded, 0, false);
-
-    TCollection_AsciiString aGlInfo;
-    {
-        TColStd_IndexedDataMapOfStringString aRendInfo;
-        mView->DiagnosticInformation(aRendInfo, Graphic3d_DiagnosticInfo_Basic);
-        for (TColStd_IndexedDataMapOfStringString::Iterator aValueIter(aRendInfo); aValueIter.More(); aValueIter.Next())
-        {
-            if (!aGlInfo.IsEmpty()) { aGlInfo += "\n"; }
-            aGlInfo += TCollection_AsciiString("  ") + aValueIter.Key() + ": " + aValueIter.Value();
-        }
-    }
-    Message::DefaultMessenger()->Send(TCollection_AsciiString("OpenGL info:\n") + aGlInfo, Message_Info);
 }
 
 void OcctView::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
@@ -203,7 +175,6 @@ void OcctView::onResize(int theWidth, int theHeight)
         mView->MustBeResized();
         mView->Invalidate();
         FlushViewEvents(mContext, mView, true);
-        // renderGui();
     }
 }
 

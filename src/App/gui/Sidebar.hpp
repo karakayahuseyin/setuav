@@ -1,6 +1,8 @@
 #ifndef _Sidebar_Header
 #define _Sidebar_Header
 
+#include "../occt/Geometry.hpp"
+
 #include <GLFW/glfw3.h>
 
 #include "imgui_impl_glfw.h"
@@ -8,7 +10,7 @@
 
 class Sidebar {
 public:
-    Sidebar() {}
+    Sidebar(Geometry *geometry) : mGeometry(geometry) {}
     ~Sidebar() {}
 
     void render();
@@ -23,6 +25,7 @@ public:
 
 private:
     Page mCurrentPage = Page::Airframe;
+    Geometry * mGeometry;
 };
 
 #endif // _Sidebar_Header

@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+double x = 0.0;
+double y = 0.0;
+double z = 0.0;
+double size = 0.0;
+
 void Sidebar::render() {
     // Set window position to the right side of the screen
     ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -32,6 +37,25 @@ void Sidebar::render() {
     ImGui::SameLine();
     if(ImGui::Button("Performance", ImVec2(buttonWidth, 0))) {
         mCurrentPage = Page::Performance;
+    }
+
+    ImGui::Separator();
+    if (ImGui::Button("Demo Scene")) {
+        std::cout << "Add Cube button clicked!" << std::endl;
+        mGeometry->demoScene();
+    }
+
+    ImGui::InputDouble("X", &x, 0.1, 0.1, "%.1f");
+    ImGui::InputDouble("Y", &y, 0.1, 0.1, "%.1f");
+    ImGui::InputDouble("Z", &z, 0.1, 0.1, "%.1f");
+    ImGui::InputDouble("Size", &size, 0.1, 0.1, "%.1f");
+
+    if (ImGui::Button("Add Cube")) {
+        mGeometry->addCube(x, y, z, size);
+    }
+
+    if (ImGui::Button("Delete Cube")) {
+        mGeometry->deleteCube();
     }
     
     ImGui::End();

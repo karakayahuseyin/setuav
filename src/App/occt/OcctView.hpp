@@ -1,7 +1,7 @@
 #ifndef _OcctView_Header
 #define _OcctView_Header
 
-#include "Window.hpp"
+#include "../Window.hpp"
 
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_ViewController.hxx>
@@ -17,6 +17,9 @@ public:
     void init();
     void render();
     void cleanup();
+
+    Handle(AIS_InteractiveContext) getContext() const { return mContext; }
+    Handle(V3d_View) getView() const { return mView; }
 
 public:
     //! Handle view redraw.
@@ -79,7 +82,6 @@ private:
     Handle(Window) mWindow;
     Handle(V3d_View) mView;
     Handle(AIS_InteractiveContext) mContext;
-    void initDemoScene();
     bool myToWaitEvents = false;
 };
 
