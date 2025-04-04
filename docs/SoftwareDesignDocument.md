@@ -1,8 +1,11 @@
 # Software Design Document
 Setuav - A toolkit for UAV design, performance analysis and simulation integration processes
 
-Version: 0.1 
-Author, Supervisor: Hüseyin Karakaya
+    Docuement Info:
+    Version: 0.1 
+    Author, Supervisor: Hüseyin Karakaya
+    Date: 2025-04-04
+    License: MIT License
 
 ## Table of Contents
 - [Introduction](#introduction) 
@@ -74,4 +77,8 @@ This document is intended for:
 - SDD: Software Design Document
 
 ## Overview
+
+FIGURE 1: System Context Diagram
+
+![System Context Diagram](system-context-diagram.png)
 
