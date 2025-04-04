@@ -1,15 +1,18 @@
-#ifndef _Geometry_Header
-#define _Geometry_Header
+#ifndef _Editor_Header
+#define _Editor_Header
 
 #include <AIS_InteractiveContext.hxx>
 #include <V3d_View.hxx>
 
-class Geometry
+namespace Geometry {
+
+class Editor
 {
 public:
-    Geometry( Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
-    ~Geometry();
+    Editor( Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
+    ~Editor();
 
+    // Test methods
     void addCube(double x, double y, double z, double size);
     void deleteCube();
     void demoScene();
@@ -19,4 +22,6 @@ private:
     Handle(V3d_View) mView;
 };
 
-#endif // _Geometry_Header
+} // namespace Geometry
+
+#endif // _Editor_Header

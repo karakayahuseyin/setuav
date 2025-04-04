@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+namespace UI {
+
 double x = 0.0;
 double y = 0.0;
 double z = 0.0;
@@ -42,7 +44,7 @@ void Sidebar::render() {
     ImGui::Separator();
     if (ImGui::Button("Demo Scene")) {
         std::cout << "Add Cube button clicked!" << std::endl;
-        mGeometry->demoScene();
+        mGeometryEditor->demoScene();
     }
 
     ImGui::InputDouble("X", &x, 0.1, 0.1, "%.1f");
@@ -51,12 +53,14 @@ void Sidebar::render() {
     ImGui::InputDouble("Size", &size, 0.1, 0.1, "%.1f");
 
     if (ImGui::Button("Add Cube")) {
-        mGeometry->addCube(x, y, z, size);
+        mGeometryEditor->addCube(x, y, z, size);
     }
 
     if (ImGui::Button("Delete Cube")) {
-        mGeometry->deleteCube();
+        mGeometryEditor->deleteCube();
     }
     
     ImGui::End();
 }
+
+} // namespace UI

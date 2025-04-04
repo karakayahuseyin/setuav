@@ -1,5 +1,7 @@
 #include "Topbar.hpp"
 
+namespace UI {
+
 void Topbar::render() {
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("File")) {
@@ -23,3 +25,5 @@ void Topbar::render() {
     }
     ImGui::EndMainMenuBar();
 }
+
+} // namespace UI

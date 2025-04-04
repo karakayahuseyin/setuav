@@ -2,9 +2,9 @@
 #define _Setuav_Header
 
 #include "Window.hpp"
-#include "gui/Gui.hpp"
-#include "occt/OcctView.hpp"
-#include "occt/Geometry.hpp"
+#include "UI/MainWindow/MainWindow.hpp"
+#include "Geometry/Viewer.hpp"
+#include "Geometry/Editor.hpp"
 
 class Setuav
 {
@@ -20,13 +20,10 @@ private:
     void initWindow(int theWidth, int theHeight, const char* theTitle);
 
     //! Create 3D Viewer.
-    void initOcctView();
+    void initGeometryViewer();
 
     //! Init ImGui.
-    void initGui();
-
-    //! Render ImGUI.
-    void renderGui();
+    void initMainWindow();
 
     //! Application event loop.
     void mainloop();
@@ -37,15 +34,15 @@ private:
 public:
 
     Window* getWindow () { return mWindow.get(); }
-    OcctView* getOcctView () { return mOcctView; }
-    Gui* getGui () { return mGui; }
+    Geometry::Viewer* getGeometryViewer () { return mGeometryViewer; }
+    UI::MainWindow* getMainWindow () { return mMainWindow; }
 
 private:
 
     Handle(Window) mWindow;
-    OcctView* mOcctView;
-    Gui* mGui;
-    Geometry* mGeometry;
+    Geometry::Viewer *mGeometryViewer;
+    UI::MainWindow *mMainWindow;
+    Geometry::Editor *mGeometryEditor;
 
     // Handle(AirframeView) mAirframeView;
     // Handle(PropulsionView) mPropulsionView;

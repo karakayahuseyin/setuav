@@ -12,18 +12,18 @@ Setuav::~Setuav() {}
 void Setuav::run()
 {
     initWindow(1280, 720, "Setuav");
-    initOcctView();
-    initGui();
+    initGeometryViewer();
+    initMainWindow();
     mainloop();
     cleanup();
 }
 
-void Setuav::initWindow(int theWidth, int theHeight, const char* theTitle)
+void Setuav::initWindow(int width, int height, const char* title)
 {
-    glfwSetErrorCallback(OcctView::errorCallback);
+    glfwSetErrorCallback(Geometry::Viewer::errorCallback);
     glfwInit();
-    const bool toAskCoreProfile = true;
-    if (toAskCoreProfile)
+    const bool useCoreProfile = true;
+    if (useCoreProfile)
     {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -34,24 +34,24 @@ void Setuav::initWindow(int theWidth, int theHeight, const char* theTitle)
         //glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, true);
         //glfwWindowHint(GLFW_DECORATED, GL_FALSE);
     }
-    mWindow = new Window(theWidth, theHeight, theTitle);
-    // Don't set window user pointer here - it will be set in initOcctView
+    mWindow = new Window(width, height, title);
+    // Don't set window user pointer here - it will be set in initGeometry::Viewer
 }
 
-void Setuav::initOcctView()
+void Setuav::initGeometryViewer()
 {
-    mOcctView = new OcctView(mWindow);
-    mOcctView->init();
+    mGeometryViewer = new Geometry::Viewer(mWindow);
+    mGeometryViewer->init();
     
-    glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mOcctView);
-    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), OcctView::onResizeCallback);
-    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), OcctView::onFBResizeCallback);
+    glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mGeometryViewer);
+    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), Geometry::Viewer::onResizeCallback);
+    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), Geometry::Viewer::onFBResizeCallback);
 }
 
-void Setuav::initGui()
+void Setuav::initMainWindow()
 {
-    mGui = new Gui(mWindow->getGlfwWindow(), new Geometry(mOcctView->getContext(), mOcctView->getView()));
-    mGui->init();
+    mMainWindow = new UI::MainWindow(mWindow->getGlfwWindow(), new Geometry::Editor(mGeometryViewer->getContext(), mGeometryViewer->getView()));
+    mMainWindow->init();
 }
 
 void Setuav::mainloop()
@@ -62,9 +62,9 @@ void Setuav::mainloop()
         glfwPollEvents();
         
         // Make sure we render in the correct order
-        if (mGui->getCurrentPage() != Sidebar::Page::Performance)
+        if (mMainWindow->getCurrentPage() != UI::Sidebar::Page::Performance)
         {
-            mOcctView->render();
+            mGeometryViewer->render();
             // disable IO for ImGui to avoid capturing mouse events
         } 
         else 
@@ -81,7 +81,7 @@ void Setuav::mainloop()
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
         
-        mGui->render();
+        mMainWindow->render();
         
         // Only swap buffers if window is still valid
         if (!mWindow.IsNull() && mWindow->getGlfwWindow() != nullptr)
@@ -93,18 +93,18 @@ void Setuav::mainloop()
 
 void Setuav::cleanup()
 {
-    if (mGui != nullptr)
+    if (mMainWindow != nullptr)
     {
-        delete mGui;
-        mGui = nullptr;
+        delete mMainWindow;
+        mMainWindow = nullptr;
     }
     
-    if (mOcctView != nullptr)
+    if (mGeometryViewer != nullptr)
     {
-        mOcctView->cleanup();
-        delete mOcctView;
-        mOcctView = nullptr;
+        mGeometryViewer->cleanup();
+        delete mGeometryViewer;
+        mGeometryViewer = nullptr;
     }
     
-    // The mWindow handle will be nullified inside OcctView::cleanup
+    // The mWindow handle will be nullified inside Geometry::Viewer::cleanup
 }

@@ -1,5 +1,5 @@
-#ifndef _OcctView_Header
-#define _OcctView_Header
+#ifndef _Viewer_Header
+#define _Viewer_Header
 
 #include "../Window.hpp"
 
@@ -7,12 +7,15 @@
 #include <AIS_ViewController.hxx>
 #include <V3d_View.hxx>
 
+namespace Geometry
+{
+
 //! Sample class creating 3D Viewer within GLFW window.
-class OcctView : protected AIS_ViewController
+class Viewer : protected AIS_ViewController
 {
 public:
-    OcctView(const Handle(Window)& theWindow);
-    ~OcctView();
+    Viewer(const Handle(Window)& theWindow);
+    ~Viewer();
 
     void init();
     void render();
@@ -45,7 +48,7 @@ public:
     static void errorCallback(int theError, const char* theDescription);
 
     //! Wrapper for glfwGetWindowUserPointer() returning this class instance.
-    static OcctView* toView(GLFWwindow* theWin);
+    static Viewer* toView(GLFWwindow* theWin);
 
     //! Window resize callback.
     static void onResizeCallback(GLFWwindow* theWin, int theWidth, int theHeight)
@@ -67,4 +70,6 @@ private:
     bool myToWaitEvents = false;
 };
 
-#endif // _OcctView_Header
+} // namespace Geometry
+
+#endif // _Viewer_Header

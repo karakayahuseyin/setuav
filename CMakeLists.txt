@@ -10,49 +10,53 @@ find_package(glfw3 REQUIRED)
 
 # ImGui library
 add_library(imgui STATIC
-    lib/imgui/imgui.cpp
-    lib/imgui/imgui_draw.cpp
-    lib/imgui/imgui_demo.cpp
-    lib/imgui/imgui_tables.cpp
-    lib/imgui/imgui_widgets.cpp
+    Source/Lib/imgui/imgui.cpp
+    Source/Lib/imgui/imgui_draw.cpp
+    Source/Lib/imgui/imgui_demo.cpp
+    Source/Lib/imgui/imgui_tables.cpp
+    Source/Lib/imgui/imgui_widgets.cpp
 )
 
-target_include_directories(imgui PUBLIC lib/imgui)
+target_include_directories(imgui PUBLIC Source/Lib/imgui)
 
 # ImGui backend
 add_library(imgui_backend STATIC
-    lib/imgui/backends/imgui_impl_glfw.cpp
-    lib/imgui/backends/imgui_impl_opengl3.cpp
+    Source/Lib/imgui/backends/imgui_impl_glfw.cpp
+    Source/Lib/imgui/backends/imgui_impl_opengl3.cpp
 )
 
 target_include_directories(imgui_backend PUBLIC
-    lib/imgui
-    lib/imgui/backends
+    Source/Lib/imgui
+    Source/Lib/imgui/backends
 )
 
 include_directories(SYSTEM ${OpenCASCADE_INCLUDE_DIR})
 
+set(SOURCES
+    Source/Application/Setuav.cpp
+    Source/Application/Setuav.hpp
+    Source/Application/Window.cpp
+    Source/Application/Window.hpp
+    Source/Application/Geometry/Viewer.cpp
+    Source/Application/Geometry/Viewer.hpp
+    Source/Application/Geometry/Editor.cpp
+    Source/Application/Geometry/Editor.hpp
+    Source/Application/UI/MainWindow/MainWindow.cpp
+    Source/Application/UI/MainWindow/MainWindow.hpp
+    Source/Application/UI/MainWindow/Sidebar.cpp
+    Source/Application/UI/MainWindow/Sidebar.hpp
+    Source/Application/UI/MainWindow/Topbar.cpp
+    Source/Application/UI/MainWindow/Topbar.hpp
+)
+
 add_executable(Setuav
-    src/main.cpp
-    src/App/occt/OcctView.cpp
-    src/App/occt/OcctView.hpp
-    src/App/occt/Geometry.cpp
-    src/App/occt/Geometry.hpp
-    src/App/Window.cpp
-    src/App/Window.hpp
-    src/App/Setuav.cpp
-    src/App/Setuav.hpp
-    src/App/gui/Gui.cpp
-    src/App/gui/Gui.hpp
-    src/App/gui/Sidebar.cpp
-    src/App/gui/Sidebar.hpp
-    src/App/gui/Topbar.cpp
-    src/App/gui/Topbar.hpp
+    Source/Application/main.cpp
+    ${SOURCES}
 )
 
 target_include_directories(Setuav PRIVATE 
-    lib/imgui
-    lib/imgui/backends
+    Source/Lib/imgui
+    Source/Lib/imgui/backends
 )
 
 target_link_libraries(Setuav imgui glfw imgui_backend)

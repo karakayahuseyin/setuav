@@ -1,7 +1,7 @@
-#include "OcctView.hpp"
+#include "Viewer.hpp"
 
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include <AIS_Shape.hxx>
 #include <AIS_ViewCube.hxx>
@@ -18,50 +18,50 @@
 
 #include <GLFW/glfw3.h>
 
-namespace
+//! Convert GLFW mouse button into Aspect_VKeyMouse.
+static Aspect_VKeyMouse mouseButtonFromGlfw(int theButton)
 {
-    //! Convert GLFW mouse button into Aspect_VKeyMouse.
-    static Aspect_VKeyMouse mouseButtonFromGlfw(int theButton)
+    switch (theButton)
     {
-        switch (theButton)
-        {
-        case GLFW_MOUSE_BUTTON_LEFT:   return Aspect_VKeyMouse_LeftButton;
-        case GLFW_MOUSE_BUTTON_RIGHT:  return Aspect_VKeyMouse_RightButton;
-        case GLFW_MOUSE_BUTTON_MIDDLE: return Aspect_VKeyMouse_MiddleButton;
-        }
-        return Aspect_VKeyMouse_NONE;
+    case GLFW_MOUSE_BUTTON_LEFT:   return Aspect_VKeyMouse_LeftButton;
+    case GLFW_MOUSE_BUTTON_RIGHT:  return Aspect_VKeyMouse_RightButton;
+    case GLFW_MOUSE_BUTTON_MIDDLE: return Aspect_VKeyMouse_MiddleButton;
     }
-
-    //! Convert GLFW key modifiers into Aspect_VKeyFlags.
-    static Aspect_VKeyFlags keyFlagsFromGlfw(int theFlags)
-    {
-        Aspect_VKeyFlags aFlags = Aspect_VKeyFlags_NONE;
-        if ((theFlags & GLFW_MOD_SHIFT) != 0)
-        {
-            aFlags |= Aspect_VKeyFlags_SHIFT;
-        }
-        if ((theFlags & GLFW_MOD_CONTROL) != 0)
-        {
-            aFlags |= Aspect_VKeyFlags_CTRL;
-        }
-        if ((theFlags & GLFW_MOD_ALT) != 0)
-        {
-            aFlags |= Aspect_VKeyFlags_ALT;
-        }
-        if ((theFlags & GLFW_MOD_SUPER) != 0)
-        {
-            aFlags |= Aspect_VKeyFlags_META;
-        }
-        return aFlags;
-    }
+    return Aspect_VKeyMouse_NONE;
 }
 
-OcctView::OcctView(const Handle(Window)& theWindow)
+//! Convert GLFW key modifiers into Aspect_VKeyFlags.
+static Aspect_VKeyFlags keyFlagsFromGlfw(int theFlags)
+{
+    Aspect_VKeyFlags aFlags = Aspect_VKeyFlags_NONE;
+    if ((theFlags & GLFW_MOD_SHIFT) != 0)
+    {
+        aFlags |= Aspect_VKeyFlags_SHIFT;
+    }
+    if ((theFlags & GLFW_MOD_CONTROL) != 0)
+    {
+        aFlags |= Aspect_VKeyFlags_CTRL;
+    }
+    if ((theFlags & GLFW_MOD_ALT) != 0)
+    {
+        aFlags |= Aspect_VKeyFlags_ALT;
+    }
+    if ((theFlags & GLFW_MOD_SUPER) != 0)
+    {
+        aFlags |= Aspect_VKeyFlags_META;
+    }
+    return aFlags;
+}
+
+namespace Geometry
+{
+
+Viewer::Viewer(const Handle(Window)& theWindow)
     : mWindow(theWindow)
 {
 }
 
-OcctView::~OcctView()
+Viewer::~Viewer()
 {
     // Make sure we're not accessing deleted objects in callbacks
     if (!mWindow.IsNull() && mWindow->getGlfwWindow() != nullptr) {
@@ -73,17 +73,17 @@ OcctView::~OcctView()
     }
 }
 
-OcctView* OcctView::toView(GLFWwindow* theWin)
+Viewer* Viewer::toView(GLFWwindow* theWin)
 {
-    return static_cast<OcctView*>(glfwGetWindowUserPointer(theWin));
+    return static_cast<Viewer*>(glfwGetWindowUserPointer(theWin));
 }
 
-void OcctView::errorCallback(int theError, const char* theDescription)
+void Viewer::errorCallback(int theError, const char* theDescription)
 {
     Message::DefaultMessenger()->Send(TCollection_AsciiString("Error") + theError + ": " + theDescription, Message_Fail);
 }
 
-void OcctView::init()
+void Viewer::init()
 {
     if (mWindow.IsNull())
     {
@@ -98,7 +98,7 @@ void OcctView::init()
     aViewer->SetDefaultLights();
     aViewer->SetLightOn();
     aViewer->SetDefaultTypeOfView(V3d_PERSPECTIVE);
-    aViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);
+    // aViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);
     mView = aViewer->CreateView();
     //mView->SetImmediateUpdate(Standard_False);
     mView->SetWindow(mWindow, mWindow->NativeGlContext());
@@ -108,24 +108,24 @@ void OcctView::init()
     mView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.08, V3d_WIREFRAME);
     mView->SetBackgroundColor(Quantity_NOC_GRAY25);
     
-    Handle(AIS_ViewCube) aCube = new AIS_ViewCube();
-    aCube->SetSize(55);
-    aCube->SetFontHeight(12);
-    aCube->SetAxesLabels("", "", "");
-    aCube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_LEFT_LOWER, Graphic3d_Vec2i(100, 100)));
-    aCube->SetViewAnimation(this->ViewAnimation());
-    aCube->SetFixedAnimationLoop(false);
-    mContext->Display(aCube, false);
+    // Handle(AIS_ViewCube) aCube = new AIS_ViewCube();
+    // aCube->SetSize(55);
+    // aCube->SetFontHeight(12);
+    // aCube->SetAxesLabels("", "", "");
+    // aCube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_LEFT_LOWER, Graphic3d_Vec2i(100, 100)));
+    // aCube->SetViewAnimation(this->ViewAnimation());
+    // aCube->SetFixedAnimationLoop(false);
+    // mContext->Display(aCube, false);
 }
 
-void OcctView::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
+void Viewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
     const Handle(V3d_View)& theView)
 {
     AIS_ViewController::handleViewRedraw(theCtx, theView);
     // myToWaitEvents = !myToAskNextFrame;
 }
 
-void OcctView::render()
+void Viewer::render()
 {
     if (myToWaitEvents)
     {
@@ -142,7 +142,7 @@ void OcctView::render()
     }
 }
 
-void OcctView::cleanup()
+void Viewer::cleanup()
 {
     // Clean up in proper order
     if (!mContext.IsNull())
@@ -165,7 +165,7 @@ void OcctView::cleanup()
     glfwTerminate();
 }
 
-void OcctView::onResize(int theWidth, int theHeight)
+void Viewer::onResize(int theWidth, int theHeight)
 {
     if (theWidth != 0
         && theHeight != 0
@@ -178,7 +178,7 @@ void OcctView::onResize(int theWidth, int theHeight)
     }
 }
 
-void OcctView::onMouseScroll(double theOffsetX, double theOffsetY)
+void Viewer::onMouseScroll(double theOffsetX, double theOffsetY)
 {
     ImGuiIO& aIO = ImGui::GetIO();
     if (!mView.IsNull() && !aIO.WantCaptureMouse)
@@ -187,7 +187,7 @@ void OcctView::onMouseScroll(double theOffsetX, double theOffsetY)
     }
 }
 
-void OcctView::onMouseButton(int theButton, int theAction, int theMods)
+void Viewer::onMouseButton(int theButton, int theAction, int theMods)
 {
     ImGuiIO& aIO = ImGui::GetIO();
     if (mView.IsNull() || aIO.WantCaptureMouse)
@@ -206,7 +206,7 @@ void OcctView::onMouseButton(int theButton, int theAction, int theMods)
     }
 }
 
-void OcctView::onMouseMove(int thePosX, int thePosY)
+void Viewer::onMouseMove(int thePosX, int thePosY)
 {
     if (mView.IsNull())
     {
@@ -224,3 +224,5 @@ void OcctView::onMouseMove(int thePosX, int thePosY)
         UpdateMousePosition(aNewPos, PressedMouseButtons(), LastMouseFlags(), Standard_False);
     }
 }
+
+} // namespace Geometry

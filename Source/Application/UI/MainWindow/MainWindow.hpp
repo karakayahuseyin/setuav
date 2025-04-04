@@ -1,20 +1,22 @@
-#ifndef _Gui_Header
-#define _Gui_Header
+#ifndef _MainWindow_Header
+#define _MainWindow_Header
 
-#include "../Window.hpp"
+#include "../../Window.hpp"
 #include "Sidebar.hpp"
 #include "Topbar.hpp"
 
 #include <GLFW/glfw3.h>
 
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
-class Gui {
+namespace UI {
+
+class MainWindow {
 public:
     //! Constructor.
-    Gui(GLFWwindow* window, Geometry* geometry);
-    ~Gui();
+    MainWindow(GLFWwindow* window, Geometry::Editor* geometryEditor);
+    ~MainWindow();
 
     void init();
     void render();
@@ -31,7 +33,9 @@ private:
     GLFWwindow* mWindow;
     Topbar* mTopbar;
     Sidebar* mSidebar;
-    // Other GUI components can be added here
+    // Other MainWindow components can be added here
 };
 
-#endif // _Gui_Header
+} // namespace UI
+
+#endif // _MainWindow_Header

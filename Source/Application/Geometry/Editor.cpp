@@ -1,4 +1,4 @@
-#include "Geometry.hpp"
+#include "Editor.hpp"
 
 #include <AIS_Shape.hxx>
 #include <AIS_ViewCube.hxx>
@@ -10,7 +10,9 @@
 
 #include <iostream>
 
-Geometry::Geometry(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView)
+namespace Geometry {
+
+Editor::Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView)
     : mContext(theContext), mView(theView)
 {
     if (mContext.IsNull() || mView.IsNull())
@@ -20,7 +22,7 @@ Geometry::Geometry(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) t
     }
 }
 
-void Geometry::demoScene()
+void Editor::demoScene()
 {
     if (mContext.IsNull())
     {
@@ -48,7 +50,7 @@ void Geometry::demoScene()
     Message::DefaultMessenger()->Send(TCollection_AsciiString("OpenGL info:\n") + aGlInfo, Message_Info);
 }
 
-void Geometry::addCube(double x, double y, double z, double size)
+void Editor::addCube(double x, double y, double z, double size)
 {
     if (mContext.IsNull())
     {
@@ -68,7 +70,7 @@ void Geometry::addCube(double x, double y, double z, double size)
     mContext->Display(aBox, AIS_Shaded, 0, true);
 }
 
-void Geometry::deleteCube()
+void Editor::deleteCube()
 {
     if (mContext.IsNull())
     {
@@ -85,3 +87,5 @@ void Geometry::deleteCube()
 
     Message::DefaultMessenger()->Send(TCollection_AsciiString("No shape selected to delete."), Message_Info);
 }
+
+} // namespace Geometry

@@ -1,20 +1,22 @@
-#include "Gui.hpp"
+#include "MainWindow.hpp"
 
-Gui::Gui(GLFWwindow *window, Geometry *geometry)
+namespace UI {
+
+MainWindow::MainWindow(GLFWwindow *window, Geometry::Editor *geometryEditor)
     : mWindow(window),
       mTopbar(new Topbar()),
-      mSidebar(new Sidebar(geometry))
+      mSidebar(new Sidebar(geometryEditor))
 {
 }
 
-Gui::~Gui()
+MainWindow::~MainWindow()
 {
     cleanup();
     delete mTopbar;
     delete mSidebar;
 }
 
-void Gui::init()
+void MainWindow::init()
 {    
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -29,7 +31,7 @@ void Gui::init()
     // ImGui::StyleColorsClassic();
 }
 
-void Gui::render()
+void MainWindow::render()
 {
     // Begin new ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -46,9 +48,11 @@ void Gui::render()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void Gui::cleanup()
+void MainWindow::cleanup()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
+
+} // namespace UI
