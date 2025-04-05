@@ -18,14 +18,12 @@ set OCCT_DEPS_URL=https://github.com/Open-Cascade-SAS/OCCT/releases/download/V7_
 set OCCT_ZIP=%TEMP%\occt-vc143-64.zip
 set OCCT_DEPS_ZIP=%TEMP%\3rdparty-vc14-64.zip
 
-set OCCT_DIR=%OPENCASCADE_DIR%\occt
-set OCCT_DEPS_DIR=%OPENCASCADE_DIR%\3rdparty
+set OCCT_DIR=%OPENCASCADE_DIR%\
+set OCCT_DEPS_DIR=%OPENCASCADE_DIR%\
 
 :: Create directories if they don't exist
 if not exist %LIB_DIR% mkdir %LIB_DIR%
 if not exist %OPENCASCADE_DIR% mkdir %OPENCASCADE_DIR%
-if not exist %OCCT_DIR% mkdir %OCCT_DIR%
-if not exist %OCCT_DEPS_DIR% mkdir %OCCT_DEPS_DIR%
 
 echo ======================================
 echo Downloading OpenCASCADE 7.8 Package...
@@ -38,7 +36,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Extracting OpenCASCADE package...
-powershell -Command "& {Expand-Archive -Path '%OCCT_ZIP%' -DestinationPath '%OCCT_DIR%' -Force}"
+powershell -Command "& {Expand-Archive -Path '%OCCT_ZIP%' -DestinationPath '%OPENCASCADE_DIR%' -Force}"
 
 if %ERRORLEVEL% NEQ 0 (
     echo Failed to extract OpenCASCADE package.
@@ -56,7 +54,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Extracting OpenCASCADE dependencies...
-powershell -Command "& {Expand-Archive -Path '%OCCT_DEPS_ZIP%' -DestinationPath '%OCCT_DEPS_DIR%' -Force}"
+powershell -Command "& {Expand-Archive -Path '%OCCT_DEPS_ZIP%' -DestinationPath '%OPENCASCADE_DIR%' -Force}"
 
 if %ERRORLEVEL% NEQ 0 (
     echo Failed to extract OpenCASCADE dependencies.
@@ -66,8 +64,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo =========================================
 echo Installation completed successfully!
 echo =========================================
-echo OpenCASCADE package installed to: %OCCT_DIR%
-echo OpenCASCADE dependencies installed to: %OCCT_DEPS_DIR%
+echo OpenCASCADE packages installed
 echo.
 echo You can now build the project with build.bat
 
