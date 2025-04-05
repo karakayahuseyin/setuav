@@ -1,18 +1,23 @@
 # Setuav
 
-**SETUAV** is a tool for UAV design, performance analysis and simulation integrations. Built with **OpenCASCADE** and **ImGui**.
+**SETUAV** is a tool for UAV design, performance analysis and simulation integrations. 
 
 ## Dependencies
 
-- OpenCASCADE (installed at C:/Dev/Libraries/OpenCASCADE/)
+- OpenCASCADE (install with setup.bat)
 - GLFW3 (installed via vcpkg)
-- Dear ImGui (included in lib/imgui)
+- Dear ImGui (included in Source/Lib/imgui as submodule)
 
 Please ensure that library paths are properly configured in CMake.
 
 ## Building the Project
 
 ### Windows
+
+Setup environment & install libraries:
+```bat
+setup.bat
+```
 
 You can build the project using the provided batch file:
 
@@ -26,29 +31,6 @@ build.bat --release
 # Default (Debug)
 build.bat
 ```
-
-### Manual Build
-
-1. Create a build directory:
-   ```
-   mkdir build && cd build
-   ```
-
-2. Configure with CMake:
-   ```
-   cmake -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Debug ..
-   ```
-
-3. Build the project:
-   ```
-   cmake --build . --config Debug
-   ```
-
-## Project Structure
-
-- `src/` - Application source code
-- `lib/` - Third-party libraries
-- `build/` - Build output directory
 
 ## License
 
