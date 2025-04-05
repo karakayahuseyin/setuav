@@ -2,61 +2,68 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Setuav CXX)
 
-set(OpenCASCADE_DIR "C:/Dev/Libraries/OpenCASCADE/occt-vc143-64/cmake")
+# Set Library directories
+set(ImGui_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/imgui")
+set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/occt-vc143-64")
 set(glfw3_DIR "C:/Dev/Tools/vcpkg/installed/x64-windows/share/glfw3")
 
+# Find packages
 find_package(OpenCASCADE REQUIRED)
 find_package(glfw3 REQUIRED)
 
-# ImGui library
+# Add ImGui library
 add_library(imgui STATIC
-    Source/Lib/imgui/imgui.cpp
-    Source/Lib/imgui/imgui_draw.cpp
-    Source/Lib/imgui/imgui_demo.cpp
-    Source/Lib/imgui/imgui_tables.cpp
-    Source/Lib/imgui/imgui_widgets.cpp
+    ${ImGui_DIR}/imgui.cpp
+    ${ImGui_DIR}/imgui_draw.cpp
+    ${ImGui_DIR}/imgui_demo.cpp
+    ${ImGui_DIR}/imgui_tables.cpp
+    ${ImGui_DIR}/imgui_widgets.cpp
 )
 
-target_include_directories(imgui PUBLIC Source/Lib/imgui)
+target_include_directories(imgui PUBLIC ${ImGui_DIR})
 
-# ImGui backend
+# Add ImGui backend library for GLFW and OpenGL
 add_library(imgui_backend STATIC
-    Source/Lib/imgui/backends/imgui_impl_glfw.cpp
-    Source/Lib/imgui/backends/imgui_impl_opengl3.cpp
+    ${ImGui_DIR}/backends/imgui_impl_glfw.cpp
+    ${ImGui_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
 target_include_directories(imgui_backend PUBLIC
-    Source/Lib/imgui
-    Source/Lib/imgui/backends
+    ${ImGui_DIR}
+    ${ImGui_DIR}/backends
 )
 
 include_directories(SYSTEM ${OpenCASCADE_INCLUDE_DIR})
 
-set(SOURCES
-    Source/Application/Setuav.cpp
-    Source/Application/Setuav.hpp
-    Source/Application/Window.cpp
-    Source/Application/Window.hpp
-    Source/Application/Geometry/Viewer.cpp
-    Source/Application/Geometry/Viewer.hpp
-    Source/Application/Geometry/Editor.cpp
-    Source/Application/Geometry/Editor.hpp
-    Source/Application/UI/MainWindow/MainWindow.cpp
-    Source/Application/UI/MainWindow/MainWindow.hpp
-    Source/Application/UI/MainWindow/Sidebar.cpp
-    Source/Application/UI/MainWindow/Sidebar.hpp
-    Source/Application/UI/MainWindow/Topbar.cpp
-    Source/Application/UI/MainWindow/Topbar.hpp
+# Set Application sources
+set(APPLICATION_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Application")
+set(APPLICATION_SOURCES
+    ${APPLICATION_SOURCE_DIR}/Setuav.cpp
+    ${APPLICATION_SOURCE_DIR}/Setuav.hpp
+    ${APPLICATION_SOURCE_DIR}/Window.cpp
+    ${APPLICATION_SOURCE_DIR}/Window.hpp
+    ${APPLICATION_SOURCE_DIR}/Geometry/Viewer.cpp
+    ${APPLICATION_SOURCE_DIR}/Geometry/Viewer.hpp
+    ${APPLICATION_SOURCE_DIR}/Geometry/Editor.cpp
+    ${APPLICATION_SOURCE_DIR}/Geometry/Editor.hpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/MainWindow.cpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/MainWindow.hpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Sidebar.cpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Sidebar.hpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Topbar.cpp
+    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Topbar.hpp
 )
 
+# Create Application executable
 add_executable(Setuav
-    Source/Application/main.cpp
-    ${SOURCES}
+    ${APPLICATION_SOURCE_DIR}/main.cpp
+    ${APPLICATION_SOURCES}
 )
 
+# Link libraries to the application
 target_include_directories(Setuav PRIVATE 
-    Source/Lib/imgui
-    Source/Lib/imgui/backends
+    ${ImGui_DIR}
+    ${ImGui_DIR}/backends
 )
 
 target_link_libraries(Setuav imgui glfw imgui_backend)
