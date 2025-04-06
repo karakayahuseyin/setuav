@@ -4,7 +4,7 @@ setlocal
 :: Set default build variables
 set BUILD_DIR=build
 set GENERATOR="Visual Studio 17 2022"
-set CONFIG=Debug
+set CONFIG=Release
 
 :: Parse command-line arguments
 if "%1"=="--debug" (
