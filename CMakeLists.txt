@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Setuav CXX)
 
+# Set global output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
+
 # Set Library directories
 set(ImGui_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/imgui")
 
@@ -9,7 +20,7 @@ set(ImGui_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/imgui")
 if(WIN32)
     set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/occt-vc143-64/cmake")
     set(glfw3_DIR "C:/Dev/Tools/vcpkg/installed/x64-windows/share/glfw3")
-else(LINUX)
+else()
     set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/install/lib/cmake/opencascade")
     # For Linux, find system GLFW3
 endif()
@@ -42,40 +53,6 @@ target_include_directories(imgui_backend PUBLIC
 
 include_directories(SYSTEM ${OpenCASCADE_INCLUDE_DIR})
 
-# Set Application sources
-set(APPLICATION_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Application")
-set(APPLICATION_SOURCES
-    ${APPLICATION_SOURCE_DIR}/Setuav.cpp
-    ${APPLICATION_SOURCE_DIR}/Setuav.hpp
-    ${APPLICATION_SOURCE_DIR}/Window.cpp
-    ${APPLICATION_SOURCE_DIR}/Window.hpp
-    ${APPLICATION_SOURCE_DIR}/Geometry/Viewer.cpp
-    ${APPLICATION_SOURCE_DIR}/Geometry/Viewer.hpp
-    ${APPLICATION_SOURCE_DIR}/Geometry/Editor.cpp
-    ${APPLICATION_SOURCE_DIR}/Geometry/Editor.hpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/MainWindow.cpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/MainWindow.hpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Sidebar.cpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Sidebar.hpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Topbar.cpp
-    ${APPLICATION_SOURCE_DIR}/UI/MainWindow/Topbar.hpp
-)
-
-# Create Application executable
-add_executable(Setuav
-    ${APPLICATION_SOURCE_DIR}/main.cpp
-    ${APPLICATION_SOURCES}
-)
-
-# Link libraries to the application
-target_include_directories(Setuav PRIVATE 
-    ${ImGui_DIR}
-    ${ImGui_DIR}/backends
-)
-
-target_link_libraries(Setuav imgui glfw imgui_backend)
-
-foreach(LIB ${OpenCASCADE_LIBRARIES})
-    target_link_libraries(Setuav debug ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
-    target_link_libraries(Setuav optimized ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
-endforeach()
+# Add subdirectories for Core and Application
+add_subdirectory(Source/Core)
+add_subdirectory(Source/Application)
