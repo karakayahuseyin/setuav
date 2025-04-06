@@ -4,8 +4,15 @@ project(Setuav CXX)
 
 # Set Library directories
 set(ImGui_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/imgui")
-set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/occt-vc143-64/cmake")
-set(glfw3_DIR "C:/Dev/Tools/vcpkg/installed/x64-windows/share/glfw3")
+
+# Handle platform-specific paths for OpenCASCADE
+if(WIN32)
+    set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/occt-vc143-64/cmake")
+    set(glfw3_DIR "C:/Dev/Tools/vcpkg/installed/x64-windows/share/glfw3")
+else(LINUX)
+    set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/install/lib/cmake/opencascade")
+    # For Linux, find system GLFW3
+endif()
 
 # Find packages
 find_package(OpenCASCADE REQUIRED)
