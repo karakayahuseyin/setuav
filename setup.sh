@@ -31,7 +31,7 @@ cd build
 cmake .. \
     -DCMAKE_BUILD_TYPE=release \
     -DCMAKE_INSTALL_RPATH="" \
-    -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/install \
+    -DCMAKE_INSTALL_PREFIX=../install \
     -DUSE_FREEIMAGE=OFF \
     -DUSE_FFMPEG=OFF \
     -DUSE_VTK=OFF \
