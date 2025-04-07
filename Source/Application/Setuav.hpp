@@ -6,6 +6,9 @@
 #include "Geometry/Viewer.hpp"
 #include "Geometry/Editor.hpp"
 
+namespace Application
+{
+
 class Setuav
 {
 public:
@@ -48,5 +51,7 @@ private:
     // Handle(PropulsionView) mPropulsionView;
     // Handle(PerformanceView) mPerformanceView;
 };
+
+} // namespace Application
 
 #endif // _Setuav_Header

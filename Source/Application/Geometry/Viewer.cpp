@@ -56,7 +56,7 @@ static Aspect_VKeyFlags keyFlagsFromGlfw(int theFlags)
 namespace Geometry
 {
 
-Viewer::Viewer(const Handle(Window)& theWindow)
+Viewer::Viewer(const Handle(Application::Window)& theWindow)
     : mWindow(theWindow)
 {
 }
@@ -107,7 +107,7 @@ void Viewer::init()
     mContext = new AIS_InteractiveContext(aViewer);
     mView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.08, V3d_WIREFRAME);
     mView->SetBackgroundColor(Quantity_NOC_GRAY25);
-    
+
     // Handle(AIS_ViewCube) aCube = new AIS_ViewCube();
     // aCube->SetSize(55);
     // aCube->SetFontHeight(12);
@@ -194,7 +194,7 @@ void Viewer::onMouseButton(int theButton, int theAction, int theMods)
     {
         return;
     }
-
+    
     const Graphic3d_Vec2i aPos = mWindow->CursorPosition();
     if (theAction == GLFW_PRESS)
     {

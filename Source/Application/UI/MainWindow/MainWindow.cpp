@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include <iostream>
 
 namespace UI {
 
@@ -23,9 +24,20 @@ void MainWindow::init()
 
     ImGuiIO& aIO = ImGui::GetIO();
     // aIO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    
+    // Check if OpenGL context is valid
+    if (!mWindow) {
+        std::cerr << "Error: GLFW window is null during UI initialization" << std::endl;
+        return;
+    }
 
-    ImGui_ImplGlfw_InitForOpenGL(mWindow, Standard_True);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    // Make sure the correct context is current
+    glfwMakeContextCurrent(mWindow);
+    
+    // Initialize ImGui backends with explicit specification of GL version
+    ImGui_ImplGlfw_InitForOpenGL(mWindow, true);
+    const char* glsl_version = "#version 330 core";
+    ImGui_ImplOpenGL3_Init(glsl_version);
 
     // Setup Dear ImGui style.
     // ImGui::StyleColorsClassic();
@@ -33,6 +45,9 @@ void MainWindow::init()
 
 void MainWindow::render()
 {
+    // Ensure the correct OpenGL context is current
+    glfwMakeContextCurrent(mWindow);
+    
     // Begin new ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();

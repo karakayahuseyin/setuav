@@ -2,6 +2,20 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Setuav CXX)
 
+# Configure RPATH for Linux
+if(UNIX AND NOT APPLE)
+    # Use RPATH instead of RUNPATH
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--disable-new-dtags")
+    
+    # Always use full RPATH
+    set(CMAKE_SKIP_BUILD_RPATH FALSE)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    
+    # Add the OpenCASCADE library directory to RPATH
+    set(CMAKE_INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/install/lib")
+endif()
+
 # Set global output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug)
@@ -23,6 +37,7 @@ if(WIN32)
 else()
     set(OpenCASCADE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source/Lib/OpenCASCADE/install/lib/cmake/opencascade")
     # For Linux, find system GLFW3
+    find_package(OpenGL REQUIRED)
 endif()
 
 # Find packages

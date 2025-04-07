@@ -39,8 +39,18 @@ target_link_libraries(Setuav
     glfw
 )
 
+if(WIN32)
+    # Windows-specific libraries would go here
+else()
+    target_link_libraries(Setuav ${OPENGL_LIBRARIES})
+endif()
+
 # Link OpenCASCADE libraries
 foreach(LIB ${OpenCASCADE_LIBRARIES})
-    target_link_libraries(Setuav debug ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
-    target_link_libraries(Setuav optimized ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
+    if(WIN32)
+        target_link_libraries(Setuav debug ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
+        target_link_libraries(Setuav optimized ${OpenCASCADE_LIBRARY_DIR}/${LIB}.lib)
+    else()
+        target_link_libraries(Setuav ${OpenCASCADE_LIBRARY_DIR}/lib${LIB}.so)
+    endif()
 endforeach()

@@ -14,30 +14,48 @@
 
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+#include <iostream>
 
-Window::Window(int theWidth, int theHeight, const TCollection_AsciiString& theTitle)
-    : myGlfwWindow(glfwCreateWindow(theWidth, theHeight, theTitle.ToCString(), NULL, NULL)),
+Application::Window::Window(int theWidth, int theHeight, const TCollection_AsciiString& theTitle)
+    : myGlfwWindow(nullptr),
     myXLeft(0),
     myYTop(0),
     myXRight(0),
     myYBottom(0)
 {
-    if (myGlfwWindow != nullptr)
+    // Set OpenGL version before creating window (especially important for Linux)
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+    
+    myGlfwWindow = glfwCreateWindow(theWidth, theHeight, theTitle.ToCString(), NULL, NULL);
+    
+    if (myGlfwWindow == nullptr)
     {
-        int aWidth = 0, aHeight = 0;
-        glfwGetWindowPos(myGlfwWindow, &myXLeft, &myYTop);
-        glfwGetWindowSize(myGlfwWindow, &aWidth, &aHeight);
-        myXLeft = myXLeft;
-        myXRight = myXLeft + aWidth;
-        myYBottom = myYTop + aHeight;
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        return;
+    }
+    
+    // Make the window's context current
+    glfwMakeContextCurrent(myGlfwWindow);
+    
+    // Get window position and size
+    int aWidth = 0, aHeight = 0;
+    glfwGetWindowPos(myGlfwWindow, &myXLeft, &myYTop);
+    glfwGetWindowSize(myGlfwWindow, &aWidth, &aHeight);
+    myXRight = myXLeft + aWidth;
+    myYBottom = myYTop + aHeight;
 
 #if !defined(_WIN32) && !defined(__APPLE__)
-        myDisplay = new Aspect_DisplayConnection((Aspect_XDisplay*)glfwGetX11Display());
+    myDisplay = new Aspect_DisplayConnection((Aspect_XDisplay*)glfwGetX11Display());
 #endif
-    }
 }
 
-void Window::Close()
+void Application::Window::Close()
 {
     if (myGlfwWindow != nullptr)
     {
@@ -46,7 +64,7 @@ void Window::Close()
     }
 }
 
-Aspect_Drawable Window::NativeHandle() const
+Aspect_Drawable Application::Window::NativeHandle() const
 {
 #if defined (__APPLE__)
     return (Aspect_Drawable)glfwGetCocoaWindow(myGlfwWindow);
@@ -57,7 +75,7 @@ Aspect_Drawable Window::NativeHandle() const
 #endif
 }
 
-Aspect_RenderingContext Window::NativeGlContext() const
+Aspect_RenderingContext Application::Window::NativeGlContext() const
 {
 #if defined (__APPLE__)
     return (NSOpenGLContext*)glfwGetNSGLContext(myGlfwWindow);
@@ -68,22 +86,22 @@ Aspect_RenderingContext Window::NativeGlContext() const
 #endif
 }
 
-Standard_Boolean Window::IsMapped() const
+Standard_Boolean Application::Window::IsMapped() const
 {
     return glfwGetWindowAttrib(myGlfwWindow, GLFW_VISIBLE) != 0;
 }
 
-void Window::Map() const
+void Application::Window::Map() const
 {
     glfwShowWindow(myGlfwWindow);
 }
 
-void Window::Unmap() const
+void Application::Window::Unmap() const
 {
     glfwHideWindow(myGlfwWindow);
 }
 
-Aspect_TypeOfResize Window::DoResize()
+Aspect_TypeOfResize Application::Window::DoResize()
 {
     if (glfwGetWindowAttrib(myGlfwWindow, GLFW_VISIBLE) == 1)
     {
@@ -98,7 +116,7 @@ Aspect_TypeOfResize Window::DoResize()
     return Aspect_TOR_UNKNOWN;
 }
 
-Graphic3d_Vec2i Window::CursorPosition() const
+Graphic3d_Vec2i Application::Window::CursorPosition() const
 {
     Graphic3d_Vec2d aPos;
     glfwGetCursorPos(myGlfwWindow, &aPos.x(), &aPos.y());

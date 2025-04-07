@@ -14,7 +14,7 @@ namespace Geometry
 class Viewer : protected AIS_ViewController
 {
 public:
-    Viewer(const Handle(Window)& theWindow);
+    Viewer(const Handle(Application::Window)& theWindow);
     ~Viewer();
 
     void init();
@@ -64,7 +64,7 @@ public:
 
 private:
 
-    Handle(Window) mWindow;
+    Handle(Application::Window) mWindow;
     Handle(V3d_View) mView;
     Handle(AIS_InteractiveContext) mContext;
     bool myToWaitEvents = false;

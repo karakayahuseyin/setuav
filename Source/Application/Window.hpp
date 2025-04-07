@@ -9,6 +9,8 @@
 
 struct GLFWwindow;
 
+namespace Application
+{
 //! GLFWwindow wrapper implementing Aspect_Window interface.
 class Window : public Aspect_Window
 {
@@ -90,5 +92,7 @@ protected:
     Standard_Integer myXRight;
     Standard_Integer myYBottom;
 };
+
+} // namespace Application
 
 #endif // _Window_Header

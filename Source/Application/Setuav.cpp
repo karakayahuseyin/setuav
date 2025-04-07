@@ -5,6 +5,9 @@
 
 #include <GLFW/glfw3.h>
 
+namespace Application
+{
+
 Setuav::Setuav() {}
 
 Setuav::~Setuav() {}
@@ -108,3 +111,5 @@ void Setuav::cleanup()
     
     // The mWindow handle will be nullified inside Geometry::Viewer::cleanup
 }
+
+} // namespace Application
