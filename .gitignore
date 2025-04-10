@@ -2,4 +2,3 @@ build/
 imgui.ini
 .vscode/c_cpp_properties.json
 .vscode/settings.json
-Source/Lib/OpenCASCADE
