@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Sidebar::Sidebar(Editor *geometryEditor)
+Sidebar::Sidebar(Geom_Editor *geometryEditor)
     : mGeometryEditor(geometryEditor),
       mAirframeMenu(std::make_unique<AirframeMenu>()),
       mPropulsionMenu(std::make_unique<PropulsionMenu>()),

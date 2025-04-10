@@ -1,7 +1,7 @@
 #include "MainWindow.hpp"
 #include <iostream>
 
-MainWindow::MainWindow(GLFWwindow *window, Editor *geometryEditor)
+MainWindow::MainWindow(GLFWwindow *window, Geom_Editor *geometryEditor)
     : mWindow(window),
       mTopbar(new Topbar()),
       mSidebar(new Sidebar(geometryEditor))

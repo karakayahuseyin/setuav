@@ -13,7 +13,7 @@
 class MainWindow {
 public:
     //! Constructor.
-    MainWindow(GLFWwindow* window, Editor* geometryEditor);
+    MainWindow(GLFWwindow* window, Geom_Editor* geometryEditor);
     ~MainWindow();
 
     void init();

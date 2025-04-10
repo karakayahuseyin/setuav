@@ -1,14 +1,14 @@
-#ifndef _Editor_Header
-#define _Editor_Header
+#ifndef _Geom_Editor_Header
+#define _Geom_Editor_Header
 
 #include <AIS_InteractiveContext.hxx>
 #include <V3d_View.hxx>
 
-class Editor
+class Geom_Editor
 {
 public:
-    Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
-    ~Editor();
+    Geom_Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
+    ~Geom_Editor();
 
     // Test methods
     void addCube(double x, double y, double z, double size);
@@ -23,4 +23,4 @@ private:
     Handle(V3d_View) mView;
 };
 
-#endif // _Editor_Header
+#endif // _Geom_Editor_Header

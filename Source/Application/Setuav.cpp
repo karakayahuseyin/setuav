@@ -20,7 +20,7 @@ void Setuav::run()
 
 void Setuav::initWindow(int width, int height, const char* title)
 {
-    glfwSetErrorCallback(Viewer::errorCallback);
+    glfwSetErrorCallback(Geom_Viewer::errorCallback);
     glfwInit();
     const bool useCoreProfile = true;
     if (useCoreProfile)
@@ -40,17 +40,17 @@ void Setuav::initWindow(int width, int height, const char* title)
 
 void Setuav::initGeometryViewer()
 {
-    mGeometryViewer = new Viewer(mWindow);
+    mGeometryViewer = new Geom_Viewer(mWindow);
     mGeometryViewer->init();
     
     glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mGeometryViewer);
-    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), Viewer::onResizeCallback);
-    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), Viewer::onFBResizeCallback);
+    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), Geom_Viewer::onResizeCallback);
+    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), Geom_Viewer::onFBResizeCallback);
 }
 
 void Setuav::initMainWindow()
 {
-    mMainWindow = new MainWindow(mWindow->getGlfwWindow(), new Editor(mGeometryViewer->getContext(), mGeometryViewer->getView()));
+    mMainWindow = new MainWindow(mWindow->getGlfwWindow(), new Geom_Editor(mGeometryViewer->getContext(), mGeometryViewer->getView()));
     mMainWindow->init();
 }
 
@@ -106,5 +106,5 @@ void Setuav::cleanup()
         mGeometryViewer = nullptr;
     }
     
-    // The mWindow handle will be nullified inside Viewer::cleanup
+    // The mWindow handle will be nullified inside Geom_Viewer::cleanup
 }

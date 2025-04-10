@@ -1,4 +1,4 @@
-#include "Viewer.hpp"
+#include "Geom_Viewer.hpp"
 
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -53,12 +53,12 @@ static Aspect_VKeyFlags keyFlagsFromGlfw(int theFlags)
     return aFlags;
 }
 
-Viewer::Viewer(const Handle(ApplicationWindow)& theWindow)
+Geom_Viewer::Geom_Viewer(const Handle(ApplicationWindow)& theWindow)
     : mWindow(theWindow)
 {
 }
 
-Viewer::~Viewer()
+Geom_Viewer::~Geom_Viewer()
 {
     // Make sure we're not accessing deleted objects in callbacks
     if (!mWindow.IsNull() && mWindow->getGlfwWindow() != nullptr) {
@@ -70,17 +70,18 @@ Viewer::~Viewer()
     }
 }
 
-Viewer* Viewer::toView(GLFWwindow* theWin)
+Geom_Viewer* Geom_Viewer::toView(GLFWwindow* theWin)
 {
-    return static_cast<Viewer*>(glfwGetWindowUserPointer(theWin));
+    return static_cast<Geom_Viewer*>(glfwGetWindowUserPointer(theWin));
 }
 
-void Viewer::errorCallback(int theError, const char* theDescription)
+void Geom_Viewer::errorCallback(int theError, const char* theDescription)
 {
-    Message::DefaultMessenger()->Send(TCollection_AsciiString("Error") + theError + ": " + theDescription, Message_Fail);
+    Message::DefaultMessenger()->Send(TCollection_AsciiString("Error") + theError + 
+                                      ": " + theDescription, Message_Fail);
 }
 
-void Viewer::init()
+void Geom_Viewer::init()
 {
     if (mWindow.IsNull())
     {
@@ -95,7 +96,7 @@ void Viewer::init()
     aViewer->SetDefaultLights();
     aViewer->SetLightOn();
     aViewer->SetDefaultTypeOfView(V3d_PERSPECTIVE);
-    // aViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);
+    aViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);
     mView = aViewer->CreateView();
     //mView->SetImmediateUpdate(Standard_False);
     mView->SetWindow(mWindow, mWindow->NativeGlContext());
@@ -104,25 +105,15 @@ void Viewer::init()
     mContext = new AIS_InteractiveContext(aViewer);
     mView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.08, V3d_WIREFRAME);
     mView->SetBackgroundColor(Quantity_NOC_GRAY25);
-
-    // Handle(AIS_ViewCube) aCube = new AIS_ViewCube();
-    // aCube->SetSize(55);
-    // aCube->SetFontHeight(12);
-    // aCube->SetAxesLabels("", "", "");
-    // aCube->SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_TriedronPers, Aspect_TOTP_LEFT_LOWER, Graphic3d_Vec2i(100, 100)));
-    // aCube->SetViewAnimation(this->ViewAnimation());
-    // aCube->SetFixedAnimationLoop(false);
-    // mContext->Display(aCube, false);
 }
 
-void Viewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
+void Geom_Viewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx,
     const Handle(V3d_View)& theView)
 {
     AIS_ViewController::handleViewRedraw(theCtx, theView);
-    // myToWaitEvents = !myToAskNextFrame;
 }
 
-void Viewer::render()
+void Geom_Viewer::render()
 {
     if (myToWaitEvents)
     {
@@ -139,7 +130,7 @@ void Viewer::render()
     }
 }
 
-void Viewer::cleanup()
+void Geom_Viewer::cleanup()
 {
     // Clean up in proper order
     if (!mContext.IsNull())
@@ -162,7 +153,7 @@ void Viewer::cleanup()
     glfwTerminate();
 }
 
-void Viewer::onResize(int theWidth, int theHeight)
+void Geom_Viewer::onResize(int theWidth, int theHeight)
 {
     if (theWidth != 0
         && theHeight != 0
@@ -175,7 +166,7 @@ void Viewer::onResize(int theWidth, int theHeight)
     }
 }
 
-void Viewer::onMouseScroll(double theOffsetX, double theOffsetY)
+void Geom_Viewer::onMouseScroll(double theOffsetX, double theOffsetY)
 {
     ImGuiIO& aIO = ImGui::GetIO();
     if (!mView.IsNull() && !aIO.WantCaptureMouse)
@@ -184,7 +175,7 @@ void Viewer::onMouseScroll(double theOffsetX, double theOffsetY)
     }
 }
 
-void Viewer::onMouseButton(int theButton, int theAction, int theMods)
+void Geom_Viewer::onMouseButton(int theButton, int theAction, int theMods)
 {
     ImGuiIO& aIO = ImGui::GetIO();
     if (mView.IsNull() || aIO.WantCaptureMouse)
@@ -203,7 +194,7 @@ void Viewer::onMouseButton(int theButton, int theAction, int theMods)
     }
 }
 
-void Viewer::onMouseMove(int thePosX, int thePosY)
+void Geom_Viewer::onMouseMove(int thePosX, int thePosY)
 {
     if (mView.IsNull())
     {

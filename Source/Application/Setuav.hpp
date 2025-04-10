@@ -3,8 +3,8 @@
 
 #include "ApplicationWindow.hpp"
 #include "UI/MainWindow/MainWindow.hpp"
-#include "Geometry/Viewer.hpp"
-#include "Geometry/Editor.hpp"
+#include "Geometry/Geom_Viewer.hpp"
+#include "Geometry/Geom_Editor.hpp"
 
 class Setuav
 {
@@ -33,15 +33,15 @@ private:
 
 public:
     ApplicationWindow* getWindow () { return mWindow.get(); }
-    Viewer* getGeometryViewer () { return mGeometryViewer; }
+    Geom_Viewer* getGeometryViewer () { return mGeometryViewer; }
     MainWindow* getMainWindow () { return mMainWindow; }
 
 private:
 
     Handle(ApplicationWindow) mWindow;
-    Viewer *mGeometryViewer;
+    Geom_Viewer *mGeometryViewer;
     MainWindow *mMainWindow;
-    Editor *mGeometryEditor;
+    Geom_Editor *mGeometryEditor;
 
     // Handle(AirframeView) mAirframeView;
     // Handle(PropulsionView) mPropulsionView;

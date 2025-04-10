@@ -1,14 +1,17 @@
 # Application CMakeLists.txt
 
+set(GEOM_SOURCES
+    Geometry/Geom_Viewer.cpp
+    Geometry/Geom_Viewer.hpp
+    Geometry/Geom_Editor.cpp
+    Geometry/Geom_Editor.hpp
+)
+
 set(APPLICATION_SOURCES
     Setuav.cpp
     Setuav.hpp
     ApplicationWindow.cpp
     ApplicationWindow.hpp
-    Geometry/Viewer.cpp
-    Geometry/Viewer.hpp
-    Geometry/Editor.cpp
-    Geometry/Editor.hpp
     UI/MainWindow/MainWindow.cpp
     UI/MainWindow/MainWindow.hpp
     UI/MainWindow/Sidebar.cpp
@@ -27,6 +30,7 @@ set(APPLICATION_SOURCES
 add_executable(Setuav
     main.cpp
     ${APPLICATION_SOURCES}
+    ${GEOM_SOURCES}
 )
 
 # Include directories

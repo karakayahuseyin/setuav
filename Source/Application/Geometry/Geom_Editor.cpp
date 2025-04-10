@@ -1,4 +1,4 @@
-#include "Editor.hpp"
+#include "Geom_Editor.hpp"
 
 #include <AIS_Shape.hxx>
 #include <AIS_ViewCube.hxx>
@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-Editor::Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView)
+Geom_Editor::Geom_Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView)
     : mContext(theContext), mView(theView)
 {
     if (mContext.IsNull() || mView.IsNull())
@@ -20,7 +20,7 @@ Editor::Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theVi
     }
 }
 
-void Editor::demoScene()
+void Geom_Editor::demoScene()
 {
     if (mContext.IsNull())
     {
@@ -48,7 +48,7 @@ void Editor::demoScene()
     Message::DefaultMessenger()->Send(TCollection_AsciiString("OpenGL info:\n") + aGlInfo, Message_Info);
 }
 
-void Editor::addCube(double x, double y, double z, double size)
+void Geom_Editor::addCube(double x, double y, double z, double size)
 {
     if (mContext.IsNull())
     {
@@ -68,7 +68,7 @@ void Editor::addCube(double x, double y, double z, double size)
     mContext->Display(aBox, AIS_Shaded, 0, true);
 }
 
-void Editor::deleteCube()
+void Geom_Editor::deleteCube()
 {
     if (mContext.IsNull())
     {

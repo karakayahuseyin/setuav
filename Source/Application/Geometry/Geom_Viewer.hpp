@@ -1,5 +1,5 @@
-#ifndef _Viewer_Header
-#define _Viewer_Header
+#ifndef _Geom_Viewer_Header
+#define _Geom_Viewer_Header
 
 #include "../ApplicationWindow.hpp"
 
@@ -7,12 +7,12 @@
 #include <AIS_ViewController.hxx>
 #include <V3d_View.hxx>
 
-//! Sample class creating 3D Viewer within GLFW window.
-class Viewer : protected AIS_ViewController
+//! Sample class creating 3D Geom_Viewer within GLFW window.
+class Geom_Viewer : protected AIS_ViewController
 {
 public:
-    Viewer(const Handle(ApplicationWindow)& theWindow);
-    ~Viewer();
+    Geom_Viewer(const Handle(ApplicationWindow)& theWindow);
+    ~Geom_Viewer();
 
     void init();
     void render();
@@ -45,7 +45,7 @@ public:
     static void errorCallback(int theError, const char* theDescription);
 
     //! Wrapper for glfwGetWindowUserPointer() returning this class instance.
-    static Viewer* toView(GLFWwindow* theWin);
+    static Geom_Viewer* toView(GLFWwindow* theWin);
 
     //! Window resize callback.
     static void onResizeCallback(GLFWwindow* theWin, int theWidth, int theHeight)
@@ -67,4 +67,4 @@ private:
     bool myToWaitEvents = false;
 };
 
-#endif // _Viewer_Header
+#endif // _Geom_Viewer_Header

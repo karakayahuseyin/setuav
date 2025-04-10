@@ -1,7 +1,7 @@
 #ifndef _Sidebar_Header
 #define _Sidebar_Header
 
-#include "../../Geometry/Editor.hpp"
+#include "../../Geometry/Geom_Editor.hpp"
 #include "AirframeMenu.hpp"
 #include "PropulsionMenu.hpp"
 #include "PerformanceMenu.hpp"
@@ -10,7 +10,7 @@
 
 class Sidebar {
 public:
-    Sidebar(Editor *geometryEditor);
+    Sidebar(Geom_Editor *geometryEditor);
     ~Sidebar() {}
 
     void render();
@@ -25,7 +25,7 @@ public:
 
 private:
     Page mCurrentPage = Page::Airframe;
-    Editor *mGeometryEditor;
+    Geom_Editor *mGeometryEditor;
 
     void renderPageSelector();
     void renderPageMenu();
