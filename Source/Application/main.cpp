@@ -2,6 +2,6 @@
 
 int main(int, char**)
 {
-    Application::Setuav app;
+    Setuav app;
     app.run();
 }

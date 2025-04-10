@@ -1,7 +1,5 @@
 #include "Topbar.hpp"
 
-namespace UI {
-
 void Topbar::render() {
     ImGui::BeginMainMenuBar();
     ImGui::SetWindowSize(ImVec2(0, 100));
@@ -41,5 +39,3 @@ void Topbar::render() {
 
     ImGui::EndMainMenuBar();
 }
-
-} // namespace UI

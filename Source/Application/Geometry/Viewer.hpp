@@ -1,20 +1,17 @@
 #ifndef _Viewer_Header
 #define _Viewer_Header
 
-#include "../Window.hpp"
+#include "../ApplicationWindow.hpp"
 
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_ViewController.hxx>
 #include <V3d_View.hxx>
 
-namespace Geometry
-{
-
 //! Sample class creating 3D Viewer within GLFW window.
 class Viewer : protected AIS_ViewController
 {
 public:
-    Viewer(const Handle(Application::Window)& theWindow);
+    Viewer(const Handle(ApplicationWindow)& theWindow);
     ~Viewer();
 
     void init();
@@ -64,12 +61,10 @@ public:
 
 private:
 
-    Handle(Application::Window) mWindow;
+    Handle(ApplicationWindow) mWindow;
     Handle(V3d_View) mView;
     Handle(AIS_InteractiveContext) mContext;
     bool myToWaitEvents = false;
 };
-
-} // namespace Geometry
 
 #endif // _Viewer_Header

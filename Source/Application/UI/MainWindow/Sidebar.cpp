@@ -6,9 +6,7 @@
 
 #include <iostream>
 
-namespace UI {
-
-Sidebar::Sidebar(Geometry::Editor *geometryEditor)
+Sidebar::Sidebar(Editor *geometryEditor)
     : mGeometryEditor(geometryEditor),
       mAirframeMenu(std::make_unique<AirframeMenu>()),
       mPropulsionMenu(std::make_unique<PropulsionMenu>()),
@@ -142,5 +140,3 @@ void Sidebar::renderPageMenu() {
     ImGui::PopStyleVar();
     ImGui::End();
 }
-
-} // namespace UI

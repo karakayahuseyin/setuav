@@ -9,18 +9,17 @@
 
 struct GLFWwindow;
 
-namespace Application
-{
+
 //! GLFWwindow wrapper implementing Aspect_Window interface.
-class Window : public Aspect_Window
+class ApplicationWindow : public Aspect_Window
 {
-    DEFINE_STANDARD_RTTI_INLINE(Window, Aspect_Window)
+    DEFINE_STANDARD_RTTI_INLINE(ApplicationWindow, Aspect_Window)
 public:
     //! Main constructor.
-    Window(int theWidth, int theHeight, const TCollection_AsciiString& theTitle);
+    ApplicationWindow(int theWidth, int theHeight, const TCollection_AsciiString& theTitle);
 
     //! Close the window.
-    virtual ~Window() { Close(); }
+    virtual ~ApplicationWindow() { Close(); }
 
     //! Close the window.
     void Close();
@@ -92,7 +91,5 @@ protected:
     Standard_Integer myXRight;
     Standard_Integer myYBottom;
 };
-
-} // namespace Application
 
 #endif // _Window_Header

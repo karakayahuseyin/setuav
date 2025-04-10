@@ -1,9 +1,7 @@
 #include "MainWindow.hpp"
 #include <iostream>
 
-namespace UI {
-
-MainWindow::MainWindow(GLFWwindow *window, Geometry::Editor *geometryEditor)
+MainWindow::MainWindow(GLFWwindow *window, Editor *geometryEditor)
     : mWindow(window),
       mTopbar(new Topbar()),
       mSidebar(new Sidebar(geometryEditor))
@@ -69,5 +67,3 @@ void MainWindow::cleanup()
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
-
-} // namespace UI

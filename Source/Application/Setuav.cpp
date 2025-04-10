@@ -5,9 +5,6 @@
 
 #include <GLFW/glfw3.h>
 
-namespace Application
-{
-
 Setuav::Setuav() {}
 
 Setuav::~Setuav() {}
@@ -23,7 +20,7 @@ void Setuav::run()
 
 void Setuav::initWindow(int width, int height, const char* title)
 {
-    glfwSetErrorCallback(Geometry::Viewer::errorCallback);
+    glfwSetErrorCallback(Viewer::errorCallback);
     glfwInit();
     const bool useCoreProfile = true;
     if (useCoreProfile)
@@ -37,23 +34,23 @@ void Setuav::initWindow(int width, int height, const char* title)
         //glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, true);
         //glfwWindowHint(GLFW_DECORATED, GL_FALSE);
     }
-    mWindow = new Window(width, height, title);
-    // Don't set window user pointer here - it will be set in initGeometry::Viewer
+    mWindow = new ApplicationWindow(width, height, title);
+    // Don't set window user pointer here - it will be set in initViewer
 }
 
 void Setuav::initGeometryViewer()
 {
-    mGeometryViewer = new Geometry::Viewer(mWindow);
+    mGeometryViewer = new Viewer(mWindow);
     mGeometryViewer->init();
     
     glfwSetWindowUserPointer(mWindow->getGlfwWindow(), mGeometryViewer);
-    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), Geometry::Viewer::onResizeCallback);
-    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), Geometry::Viewer::onFBResizeCallback);
+    glfwSetWindowSizeCallback(mWindow->getGlfwWindow(), Viewer::onResizeCallback);
+    glfwSetFramebufferSizeCallback(mWindow->getGlfwWindow(), Viewer::onFBResizeCallback);
 }
 
 void Setuav::initMainWindow()
 {
-    mMainWindow = new UI::MainWindow(mWindow->getGlfwWindow(), new Geometry::Editor(mGeometryViewer->getContext(), mGeometryViewer->getView()));
+    mMainWindow = new MainWindow(mWindow->getGlfwWindow(), new Editor(mGeometryViewer->getContext(), mGeometryViewer->getView()));
     mMainWindow->init();
 }
 
@@ -65,7 +62,7 @@ void Setuav::mainloop()
         glfwPollEvents();
         
         // Make sure we render in the correct order
-        if (mMainWindow->getCurrentPage() != UI::Sidebar::Page::Performance)
+        if (mMainWindow->getCurrentPage() != Sidebar::Page::Performance)
         {
             mGeometryViewer->render();
             // disable IO for ImGui to avoid capturing mouse events
@@ -109,7 +106,5 @@ void Setuav::cleanup()
         mGeometryViewer = nullptr;
     }
     
-    // The mWindow handle will be nullified inside Geometry::Viewer::cleanup
+    // The mWindow handle will be nullified inside Viewer::cleanup
 }
-
-} // namespace Application

@@ -1,7 +1,7 @@
 #ifndef _MainWindow_Header
 #define _MainWindow_Header
 
-#include "../../Window.hpp"
+#include "../../ApplicationWindow.hpp"
 #include "Sidebar.hpp"
 #include "Topbar.hpp"
 
@@ -10,12 +10,10 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-namespace UI {
-
 class MainWindow {
 public:
     //! Constructor.
-    MainWindow(GLFWwindow* window, Geometry::Editor* geometryEditor);
+    MainWindow(GLFWwindow* window, Editor* geometryEditor);
     ~MainWindow();
 
     void init();
@@ -35,7 +33,5 @@ private:
     Sidebar* mSidebar;
     // Other MainWindow components can be added here
 };
-
-} // namespace UI
 
 #endif // _MainWindow_Header

@@ -8,11 +8,9 @@
 
 #include <memory>
 
-namespace UI {
-
 class Sidebar {
 public:
-    Sidebar(Geometry::Editor *geometryEditor);
+    Sidebar(Editor *geometryEditor);
     ~Sidebar() {}
 
     void render();
@@ -27,7 +25,7 @@ public:
 
 private:
     Page mCurrentPage = Page::Airframe;
-    Geometry::Editor *mGeometryEditor;
+    Editor *mGeometryEditor;
 
     void renderPageSelector();
     void renderPageMenu();
@@ -36,7 +34,5 @@ private:
     std::unique_ptr<PropulsionMenu> mPropulsionMenu;
     std::unique_ptr<PerformanceMenu> mPerformanceMenu;
 };
-
-} // namespace UI
 
 #endif // _Sidebar_Header

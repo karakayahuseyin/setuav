@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-namespace Geometry {
-
 Editor::Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView)
     : mContext(theContext), mView(theView)
 {
@@ -87,5 +85,3 @@ void Editor::deleteCube()
 
     Message::DefaultMessenger()->Send(TCollection_AsciiString("No shape selected to delete."), Message_Info);
 }
-
-} // namespace Geometry

@@ -6,8 +6,6 @@
 #ifndef _Airframe_Header
 #define _Airframe_Header
 
-#include <QObject>
-
 /**
  * The Airframe class is a base class for all airframe types.
  * Airframe class is responsible for the physical structure of the UAV.

@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <memory>
-    
+
 struct WingSection {
     Airfoil airfoil;
     double span;

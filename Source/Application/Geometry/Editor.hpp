@@ -4,12 +4,10 @@
 #include <AIS_InteractiveContext.hxx>
 #include <V3d_View.hxx>
 
-namespace Geometry {
-
 class Editor
 {
 public:
-    Editor( Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
+    Editor(Handle(AIS_InteractiveContext) theContext, Handle(V3d_View) theView);
     ~Editor();
 
     // Test methods
@@ -17,11 +15,12 @@ public:
     void deleteCube();
     void demoScene();
 
+    void addObject(Handle(AIS_InteractiveObject) theObject);
+    void removeObject(Handle(AIS_InteractiveObject) theObject);
+
 private:
     Handle(AIS_InteractiveContext) mContext;
     Handle(V3d_View) mView;
 };
-
-} // namespace Geometry
 
 #endif // _Editor_Header

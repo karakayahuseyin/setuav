@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include "ApplicationWindow.hpp"
 
 #if defined (__APPLE__)
 #undef Handle // avoid name collisions in macOS headers
@@ -16,7 +16,7 @@
 #include <GLFW/glfw3native.h>
 #include <iostream>
 
-Application::Window::Window(int theWidth, int theHeight, const TCollection_AsciiString& theTitle)
+ApplicationWindow::ApplicationWindow(int theWidth, int theHeight, const TCollection_AsciiString& theTitle)
     : myGlfwWindow(nullptr),
     myXLeft(0),
     myYTop(0),
@@ -55,7 +55,7 @@ Application::Window::Window(int theWidth, int theHeight, const TCollection_Ascii
 #endif
 }
 
-void Application::Window::Close()
+void ApplicationWindow::Close()
 {
     if (myGlfwWindow != nullptr)
     {
@@ -64,7 +64,7 @@ void Application::Window::Close()
     }
 }
 
-Aspect_Drawable Application::Window::NativeHandle() const
+Aspect_Drawable ApplicationWindow::NativeHandle() const
 {
 #if defined (__APPLE__)
     return (Aspect_Drawable)glfwGetCocoaWindow(myGlfwWindow);
@@ -75,7 +75,7 @@ Aspect_Drawable Application::Window::NativeHandle() const
 #endif
 }
 
-Aspect_RenderingContext Application::Window::NativeGlContext() const
+Aspect_RenderingContext ApplicationWindow::NativeGlContext() const
 {
 #if defined (__APPLE__)
     return (NSOpenGLContext*)glfwGetNSGLContext(myGlfwWindow);
@@ -86,22 +86,22 @@ Aspect_RenderingContext Application::Window::NativeGlContext() const
 #endif
 }
 
-Standard_Boolean Application::Window::IsMapped() const
+Standard_Boolean ApplicationWindow::IsMapped() const
 {
     return glfwGetWindowAttrib(myGlfwWindow, GLFW_VISIBLE) != 0;
 }
 
-void Application::Window::Map() const
+void ApplicationWindow::Map() const
 {
     glfwShowWindow(myGlfwWindow);
 }
 
-void Application::Window::Unmap() const
+void ApplicationWindow::Unmap() const
 {
     glfwHideWindow(myGlfwWindow);
 }
 
-Aspect_TypeOfResize Application::Window::DoResize()
+Aspect_TypeOfResize ApplicationWindow::DoResize()
 {
     if (glfwGetWindowAttrib(myGlfwWindow, GLFW_VISIBLE) == 1)
     {
@@ -116,7 +116,7 @@ Aspect_TypeOfResize Application::Window::DoResize()
     return Aspect_TOR_UNKNOWN;
 }
 
-Graphic3d_Vec2i Application::Window::CursorPosition() const
+Graphic3d_Vec2i ApplicationWindow::CursorPosition() const
 {
     Graphic3d_Vec2d aPos;
     glfwGetCursorPos(myGlfwWindow, &aPos.x(), &aPos.y());

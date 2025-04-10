@@ -3,8 +3,8 @@
 set(APPLICATION_SOURCES
     Setuav.cpp
     Setuav.hpp
-    Window.cpp
-    Window.hpp
+    ApplicationWindow.cpp
+    ApplicationWindow.hpp
     Geometry/Viewer.cpp
     Geometry/Viewer.hpp
     Geometry/Editor.cpp

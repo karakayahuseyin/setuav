@@ -80,5 +80,5 @@ This document is intended for:
 
 FIGURE 1: System Context Diagram
 
-![System Context Diagram](system-context-diagram.png)
+![System Context Diagram](content/system-context-diagram.png)
 

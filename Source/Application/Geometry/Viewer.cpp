@@ -53,10 +53,7 @@ static Aspect_VKeyFlags keyFlagsFromGlfw(int theFlags)
     return aFlags;
 }
 
-namespace Geometry
-{
-
-Viewer::Viewer(const Handle(Application::Window)& theWindow)
+Viewer::Viewer(const Handle(ApplicationWindow)& theWindow)
     : mWindow(theWindow)
 {
 }
@@ -224,5 +221,3 @@ void Viewer::onMouseMove(int thePosX, int thePosY)
         UpdateMousePosition(aNewPos, PressedMouseButtons(), LastMouseFlags(), Standard_False);
     }
 }
-
-} // namespace Geometry

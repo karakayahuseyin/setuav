@@ -1,13 +1,10 @@
 #ifndef _Setuav_Header
 #define _Setuav_Header
 
-#include "Window.hpp"
+#include "ApplicationWindow.hpp"
 #include "UI/MainWindow/MainWindow.hpp"
 #include "Geometry/Viewer.hpp"
 #include "Geometry/Editor.hpp"
-
-namespace Application
-{
 
 class Setuav
 {
@@ -35,23 +32,20 @@ private:
     void cleanup();
 
 public:
-
-    Window* getWindow () { return mWindow.get(); }
-    Geometry::Viewer* getGeometryViewer () { return mGeometryViewer; }
-    UI::MainWindow* getMainWindow () { return mMainWindow; }
+    ApplicationWindow* getWindow () { return mWindow.get(); }
+    Viewer* getGeometryViewer () { return mGeometryViewer; }
+    MainWindow* getMainWindow () { return mMainWindow; }
 
 private:
 
-    Handle(Window) mWindow;
-    Geometry::Viewer *mGeometryViewer;
-    UI::MainWindow *mMainWindow;
-    Geometry::Editor *mGeometryEditor;
+    Handle(ApplicationWindow) mWindow;
+    Viewer *mGeometryViewer;
+    MainWindow *mMainWindow;
+    Editor *mGeometryEditor;
 
     // Handle(AirframeView) mAirframeView;
     // Handle(PropulsionView) mPropulsionView;
     // Handle(PerformanceView) mPerformanceView;
 };
-
-} // namespace Application
 
 #endif // _Setuav_Header
