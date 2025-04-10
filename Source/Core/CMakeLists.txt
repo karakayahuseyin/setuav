@@ -2,8 +2,11 @@
 
 set(CORE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CORE_SOURCES
-    Model/Uav.hpp
-    Model/Uav.cpp
+    Model/Airframe.hpp
+    Model/Airframe.cpp
+    Model/Wing.hpp
+    Model/Wing.cpp
+    Model/Airfoil.hpp
 )
 
 # Create Core library

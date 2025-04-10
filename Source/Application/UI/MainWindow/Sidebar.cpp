@@ -4,11 +4,6 @@
 
 namespace UI {
 
-double x = 0.0;
-double y = 0.0;
-double z = 0.0;
-double size = 0.0;
-
 void Sidebar::render() {
     // Set window position to the right side of the screen
     ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -42,25 +37,27 @@ void Sidebar::render() {
     }
 
     ImGui::Separator();
-    if (ImGui::Button("Demo Scene")) {
-        std::cout << "Add Cube button clicked!" << std::endl;
-        mGeometryEditor->demoScene();
-    }
-
-    ImGui::InputDouble("X", &x, 0.1, 0.1, "%.1f");
-    ImGui::InputDouble("Y", &y, 0.1, 0.1, "%.1f");
-    ImGui::InputDouble("Z", &z, 0.1, 0.1, "%.1f");
-    ImGui::InputDouble("Size", &size, 0.1, 0.1, "%.1f");
-
-    if (ImGui::Button("Add Cube")) {
-        mGeometryEditor->addCube(x, y, z, size);
-    }
-
-    if (ImGui::Button("Delete Cube")) {
-        mGeometryEditor->deleteCube();
-    }
-    
     ImGui::End();
+}
+
+void Sidebar::renderPageContent() {
+    switch (mCurrentPage) {
+        case Page::Airframe:
+            // Render Airframe page content
+            std::cout << "Rendering Airframe page content..." << std::endl;
+            break;
+        case Page::Propulsion:
+            // Render Propulsion page content
+            std::cout << "Rendering Propulsion page content..." << std::endl;
+            break;
+        case Page::Performance:
+            // Render Performance page content
+            
+            break;
+        default:
+            std::cerr << "Unknown page type!" << std::endl;
+            break;
+    }
 }
 
 } // namespace UI
