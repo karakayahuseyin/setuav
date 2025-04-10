@@ -15,6 +15,12 @@ set(APPLICATION_SOURCES
     UI/MainWindow/Sidebar.hpp
     UI/MainWindow/Topbar.cpp
     UI/MainWindow/Topbar.hpp
+    UI/MainWindow/AirframeMenu.cpp
+    UI/MainWindow/AirframeMenu.hpp
+    UI/MainWindow/PropulsionMenu.cpp
+    UI/MainWindow/PropulsionMenu.hpp
+    UI/MainWindow/PerformanceMenu.cpp
+    UI/MainWindow/PerformanceMenu.hpp
 )
 
 # Create Application executable

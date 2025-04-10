@@ -1,63 +1,146 @@
 #include "Sidebar.hpp"
 
+#include <GLFW/glfw3.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <iostream>
 
 namespace UI {
 
+Sidebar::Sidebar(Geometry::Editor *geometryEditor)
+    : mGeometryEditor(geometryEditor),
+      mAirframeMenu(std::make_unique<AirframeMenu>()),
+      mPropulsionMenu(std::make_unique<PropulsionMenu>()),
+      mPerformanceMenu(std::make_unique<PerformanceMenu>())
+{
+}
+
 void Sidebar::render() {
-    // Set window position to the right side of the screen
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
-    float sidebarWidth = 300.0f;
-    ImGui::SetNextWindowPos(ImVec2(viewport->WorkPos.x + viewport->WorkSize.x - sidebarWidth, viewport->WorkPos.y));
-    ImGui::SetNextWindowSize(ImVec2(sidebarWidth, viewport->WorkSize.y));
+    renderPageSelector();
+    renderPageMenu();
+}
+
+void Sidebar::renderPageSelector() {
+    // Calculate window position and size
+    float windowWidth = 300.0f;
+    float buttonSize = 30.0f;
+    float windowPadding = 10.0f; // Padding inside the window
+    float windowHeight = buttonSize + windowPadding * 2;
     
-    // Remove window decorations and make it fixed size
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoMove | 
-                                    ImGuiWindowFlags_NoResize | 
-                                    ImGuiWindowFlags_NoCollapse |
-                                    ImGuiWindowFlags_NoTitleBar;
-                                    
-    ImGui::Begin("Sidebar", nullptr, window_flags);
+    ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+    // Get the height of the main menu bar
+    float menuBarHeight = ImGui::GetFrameHeight();
+    ImVec2 windowPos(displaySize.x - windowWidth, menuBarHeight);
     
-    // Calculate button width for side-by-side buttons (half of available width minus spacing)
-    float availWidth = ImGui::GetContentRegionAvail().x;
-    float buttonWidth = (availWidth - 2.0f * ImGui::GetStyle().ItemSpacing.x) / 3.0f;
+    // Set window position and properties
+    ImGui::SetNextWindowPos(windowPos);
+    ImGui::SetNextWindowSize(ImVec2(windowWidth, windowHeight));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(windowPadding, windowPadding));
+    ImGui::Begin("Page Selector", nullptr, 
+        ImGuiWindowFlags_NoTitleBar | 
+        ImGuiWindowFlags_NoResize | 
+        ImGuiWindowFlags_NoMove | 
+        ImGuiWindowFlags_NoCollapse);
     
-    // First row: Airframe and Propulsion buttons side by side with equal width
-    if(ImGui::Button("Airframe", ImVec2(buttonWidth, 0))) {
+    // Set the square size for buttons
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(buttonSize/4, buttonSize/4));
+    
+    // Airframe button - Blue color
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.4f, 0.8f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.5f, 0.9f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.3f, 0.7f, 1.0f));
+    if (ImGui::Button("##Airframe", ImVec2(buttonSize, buttonSize))) {
         mCurrentPage = Page::Airframe;
     }
+    // For future icon implementation:
+    // ImGui::PushFont(iconFont);
+    // if (ImGui::Button(ICON_FA_PLANE "##Airframe", ImVec2(buttonSize, buttonSize))) {
+    //     mCurrentPage = Page::Airframe;
+    // }
+    // ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+    
     ImGui::SameLine();
-    if(ImGui::Button("Propulsion", ImVec2(buttonWidth, 0))) {
+    
+    // Propulsion button - Red color
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));
+    if (ImGui::Button("##Propulsion", ImVec2(buttonSize, buttonSize))) {
         mCurrentPage = Page::Propulsion;
     }
+    // For future icon implementation:
+    // ImGui::PushFont(iconFont);
+    // if (ImGui::Button(ICON_FA_ROCKET "##Propulsion", ImVec2(buttonSize, buttonSize))) {
+    //     mCurrentPage = Page::Propulsion;
+    // }
+    // ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+    
     ImGui::SameLine();
-    if(ImGui::Button("Performance", ImVec2(buttonWidth, 0))) {
+    
+    // Performance button - Green color
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.9f, 0.3f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.7f, 0.1f, 1.0f));
+    if (ImGui::Button("##Performance", ImVec2(buttonSize, buttonSize))) {
         mCurrentPage = Page::Performance;
     }
-
-    ImGui::Separator();
+    // For future icon implementation:
+    // ImGui::PushFont(iconFont);
+    // if (ImGui::Button(ICON_FA_CHART_LINE "##Performance", ImVec2(buttonSize, buttonSize))) {
+    //     mCurrentPage = Page::Performance;
+    // }
+    // ImGui::PopFont();
+    ImGui::PopStyleColor(3);
+    
+    ImGui::PopStyleVar();
+    
+    ImGui::PopStyleVar();
     ImGui::End();
 }
 
-void Sidebar::renderPageContent() {
+void Sidebar::renderPageMenu() {
+    // Calculate window position and size
+    float windowWidth = 300.0f;
+    float buttonSize = 30.0f;
+    float windowPadding = 10.0f; // Padding inside the window
+    float topWindowHeight = buttonSize + windowPadding * 2;
+    
+    ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+    // Get the height of the main menu bar
+    float menuBarHeight = ImGui::GetFrameHeight();
+    ImVec2 windowPos(displaySize.x - windowWidth, menuBarHeight + topWindowHeight);
+    ImVec2 windowSize(windowWidth, displaySize.y - menuBarHeight - topWindowHeight);
+    
+    // Set window position and properties
+    ImGui::SetNextWindowPos(windowPos);
+    ImGui::SetNextWindowSize(windowSize);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(windowPadding, windowPadding));
+    ImGui::Begin("Page Menu", nullptr, 
+        ImGuiWindowFlags_NoTitleBar | 
+        ImGuiWindowFlags_NoResize | 
+        ImGuiWindowFlags_NoMove | 
+        ImGuiWindowFlags_NoCollapse);
+
     switch (mCurrentPage) {
         case Page::Airframe:
-            // Render Airframe page content
-            std::cout << "Rendering Airframe page content..." << std::endl;
+            mAirframeMenu->render();
             break;
         case Page::Propulsion:
-            // Render Propulsion page content
-            std::cout << "Rendering Propulsion page content..." << std::endl;
+            mPropulsionMenu->render();
             break;
         case Page::Performance:
-            // Render Performance page content
-            
+            mPerformanceMenu->render();
             break;
         default:
             std::cerr << "Unknown page type!" << std::endl;
             break;
     }
+
+    ImGui::PopStyleVar();
+    ImGui::End();
 }
 
 } // namespace UI

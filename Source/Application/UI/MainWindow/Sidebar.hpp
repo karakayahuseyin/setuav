@@ -2,17 +2,17 @@
 #define _Sidebar_Header
 
 #include "../../Geometry/Editor.hpp"
+#include "AirframeMenu.hpp"
+#include "PropulsionMenu.hpp"
+#include "PerformanceMenu.hpp"
 
-#include <GLFW/glfw3.h>
-
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include <memory>
 
 namespace UI {
 
 class Sidebar {
 public:
-    Sidebar(Geometry::Editor *geometryEditor) : mGeometryEditor(geometryEditor) {}
+    Sidebar(Geometry::Editor *geometryEditor);
     ~Sidebar() {}
 
     void render();
@@ -28,6 +28,13 @@ public:
 private:
     Page mCurrentPage = Page::Airframe;
     Geometry::Editor *mGeometryEditor;
+
+    void renderPageSelector();
+    void renderPageMenu();
+
+    std::unique_ptr<AirframeMenu> mAirframeMenu;
+    std::unique_ptr<PropulsionMenu> mPropulsionMenu;
+    std::unique_ptr<PerformanceMenu> mPerformanceMenu;
 };
 
 } // namespace UI
