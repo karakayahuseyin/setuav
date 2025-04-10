@@ -1,8 +1,14 @@
 # Model Library CMakeLists.txt
 
 set(MODEL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(MODEL_SOURCES
-    
+set(MODEL_HEADERS
+    Airframe/Airframe.h
+    Airframe/Copter.h 
+    Airframe/Plane.h
+    Battery/Battery.h
+    Battery/BatteryCell.h
+    Wing/Wing.h
+    Wing/WingSection.h
 )
 
 # Create Model library
